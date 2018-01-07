@@ -13,6 +13,6 @@ namespace ARSN.Models
         public string AwayTeamID { get; set; }
         public string HomeResult { get; set; }
         public string AwayResult { get; set; }
-        public char Winner { get; set; }
+        public string Winner { get; set; }
     }
 }
