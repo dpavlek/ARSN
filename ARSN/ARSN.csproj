@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180108181157_LLLk.cs" />
+    <Compile Remove="Migrations\20180108181157_LLLk.Designer.cs" />
+    <Compile Remove="Migrations\20180108181707_Sreckooo.cs" />
+    <Compile Remove="Migrations\20180108181707_Sreckooo.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />

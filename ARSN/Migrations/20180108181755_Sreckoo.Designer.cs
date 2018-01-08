@@ -10,8 +10,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180104114410_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180108181755_Sreckoo")]
+    partial class Sreckoo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,8 @@ namespace ARSN.Migrations
 
                     b.HasKey("CompetitionID");
 
+                    b.HasIndex("OrganizerID");
+
                     b.ToTable("Competition");
                 });
 
@@ -49,7 +51,7 @@ namespace ARSN.Migrations
 
                     b.Property<string>("AwayTeamID");
 
-                    b.Property<string>("CompetitionID");
+                    b.Property<string>("CompetitionObjectCompetitionID");
 
                     b.Property<string>("HomeResult");
 
@@ -61,7 +63,11 @@ namespace ARSN.Migrations
 
                     b.HasKey("GameID");
 
-                    b.HasIndex("CompetitionID");
+                    b.HasIndex("AwayTeamID");
+
+                    b.HasIndex("CompetitionObjectCompetitionID");
+
+                    b.HasIndex("HomeTeamID");
 
                     b.ToTable("Game");
                 });
@@ -110,11 +116,28 @@ namespace ARSN.Migrations
                     b.ToTable("Team");
                 });
 
+            modelBuilder.Entity("ARSN.Models.Competition", b =>
+                {
+                    b.HasOne("ARSN.Models.Organizer")
+                        .WithMany("Competitions")
+                        .HasForeignKey("OrganizerID");
+                });
+
             modelBuilder.Entity("ARSN.Models.Game", b =>
                 {
-                    b.HasOne("ARSN.Models.Competition")
-                        .WithMany("GameList")
-                        .HasForeignKey("CompetitionID");
+                    b.HasOne("ARSN.Models.Team", "AwayTeam")
+                        .WithMany("AwayGame")
+                        .HasForeignKey("AwayTeamID")
+                        .HasConstraintName("FK_AwayGame");
+
+                    b.HasOne("ARSN.Models.Competition", "CompetitionObject")
+                        .WithMany("GameCollextion")
+                        .HasForeignKey("CompetitionObjectCompetitionID");
+
+                    b.HasOne("ARSN.Models.Team", "HomeTeam")
+                        .WithMany("HomeGame")
+                        .HasForeignKey("HomeTeamID")
+                        .HasConstraintName("FK_HomeGame");
                 });
 #pragma warning restore 612, 618
         }

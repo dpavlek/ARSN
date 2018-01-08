@@ -4,26 +4,10 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Sreckoo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Competition",
-                columns: table => new
-                {
-                    CompetitionID = table.Column<string>(nullable: false),
-                    CompetitionBegin = table.Column<DateTime>(nullable: false),
-                    CompetitionEnd = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    OrganizerID = table.Column<string>(nullable: true),
-                    SportType = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Competition", x => x.CompetitionID);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Organizer",
                 columns: table => new
@@ -59,13 +43,35 @@ namespace ARSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Competition",
+                columns: table => new
+                {
+                    CompetitionID = table.Column<string>(nullable: false),
+                    CompetitionBegin = table.Column<DateTime>(nullable: false),
+                    CompetitionEnd = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    OrganizerID = table.Column<string>(nullable: true),
+                    SportType = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Competition", x => x.CompetitionID);
+                    table.ForeignKey(
+                        name: "FK_Competition_Organizer_OrganizerID",
+                        column: x => x.OrganizerID,
+                        principalTable: "Organizer",
+                        principalColumn: "OrganizerID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Game",
                 columns: table => new
                 {
                     GameID = table.Column<string>(nullable: false),
                     AwayResult = table.Column<string>(nullable: true),
                     AwayTeamID = table.Column<string>(nullable: true),
-                    CompetitionID = table.Column<string>(nullable: true),
+                    CompetitionObjectCompetitionID = table.Column<string>(nullable: true),
                     HomeResult = table.Column<string>(nullable: true),
                     HomeTeamID = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),
@@ -75,17 +81,44 @@ namespace ARSN.Migrations
                 {
                     table.PrimaryKey("PK_Game", x => x.GameID);
                     table.ForeignKey(
-                        name: "FK_Game_Competition_CompetitionID",
-                        column: x => x.CompetitionID,
+                        name: "FK_AwayGame",
+                        column: x => x.AwayTeamID,
+                        principalTable: "Team",
+                        principalColumn: "TeamID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Game_Competition_CompetitionObjectCompetitionID",
+                        column: x => x.CompetitionObjectCompetitionID,
                         principalTable: "Competition",
                         principalColumn: "CompetitionID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_HomeGame",
+                        column: x => x.HomeTeamID,
+                        principalTable: "Team",
+                        principalColumn: "TeamID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_CompetitionID",
+                name: "IX_Competition_OrganizerID",
+                table: "Competition",
+                column: "OrganizerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Game_AwayTeamID",
                 table: "Game",
-                column: "CompetitionID");
+                column: "AwayTeamID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Game_CompetitionObjectCompetitionID",
+                table: "Game",
+                column: "CompetitionObjectCompetitionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Game_HomeTeamID",
+                table: "Game",
+                column: "HomeTeamID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -94,13 +127,13 @@ namespace ARSN.Migrations
                 name: "Game");
 
             migrationBuilder.DropTable(
-                name: "Organizer");
-
-            migrationBuilder.DropTable(
                 name: "Team");
 
             migrationBuilder.DropTable(
                 name: "Competition");
+
+            migrationBuilder.DropTable(
+                name: "Organizer");
         }
     }
 }
