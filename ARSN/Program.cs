@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ARSN.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ARSN
 {
@@ -16,15 +17,17 @@ namespace ARSN
         public static void Main(string[] args)
         {
             //TO DO: check if DB works
-            /*var context = new DBContext();
+            //var context = new DBContext();
             var t = new Team();
-            t.Name = "Jozo";
-            t.TeamID = "14561456";
+            t.Name = "Pero";
+            t.TeamID = "111";
             using (var context1 = new DBContext())
             {
-                context.Team.Add(t);
-                context.SaveChanges();
-            }*/
+                context1.Database.OpenConnection();
+              context1.Team.Add(t);
+                
+              context1.SaveChanges();
+            }
             BuildWebHost(args).Run();
             
         }
