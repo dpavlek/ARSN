@@ -30,6 +30,8 @@ namespace ARSN
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DBContext>()
                 .AddDefaultTokenProviders();
+
+            
             
         }
 
