@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ARSN.Models;
+using CryptoHelper;
 
 namespace ARSN.Controllers
 {
@@ -57,6 +58,7 @@ namespace ARSN.Controllers
         {
             if (ModelState.IsValid)
             {
+                organizer.Password = Crypto.HashPassword(organizer.Password);
                 organizer.OrganizerID = Guid.NewGuid();
                 _context.Add(organizer);
                 await _context.SaveChangesAsync();
@@ -86,13 +88,13 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Verified")] Organizer organizer)
         {
             if (id != organizer.OrganizerID)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try

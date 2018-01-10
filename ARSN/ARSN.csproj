@@ -17,10 +17,16 @@
     <Compile Remove="Migrations\20180110093403_DBVersion6.Designer.cs" />
     <Compile Remove="Migrations\20180110100618_DBVersion7.cs" />
     <Compile Remove="Migrations\20180110100618_DBVersion7.Designer.cs" />
+    <Compile Remove="Migrations\20180110160644_IdentityAdded.cs" />
+    <Compile Remove="Migrations\20180110160644_IdentityAdded.Designer.cs" />
+    <Compile Remove="Migrations\20180110161513_IdentityAdded.cs" />
+    <Compile Remove="Migrations\20180110161513_IdentityAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CryptoHelper" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />

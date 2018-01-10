@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ARSN.Models
 {
-    public class Organizer
+    public class Organizer:IdentityUser
     {
         #region Properties
 
@@ -16,11 +15,16 @@ namespace ARSN.Models
         public Guid OrganizerID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        [Required, EmailAddress, MaxLength(256), Display(Name = "Email")]
         public string Email { get; set; }
+        [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
         public string Organisation { get; set; }
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+        [MaxLength(1)]
         public string Gender { get; set; }
+        [Required, MinLength(6), MaxLength(50), DataType(DataType.Password), Display(Name = "Lozinka")]
         public string Password { get; set; }
         public bool Verified { get; set; }
         public ICollection<Competition> Competitions { get; set; }
@@ -30,7 +34,7 @@ namespace ARSN.Models
         #region Constructors
 
         public Organizer() { }
-        public Organizer(string name, string surname, string email, DateTime birthDate, string organisation, string phoneNumber, string gender, string password)
+        public Organizer(string name, string surname, string email, DateTime birthDate, string organisation, string phoneNumber, string gender, bool verified)
         {
             Name = name;
             Surname = surname;
@@ -39,7 +43,7 @@ namespace ARSN.Models
             Organisation = organisation;
             PhoneNumber = phoneNumber;
             Gender = gender;
-            Password = password;
+            Verified = verified;
         }
 
         #endregion Constructors

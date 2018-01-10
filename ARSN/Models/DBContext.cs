@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ARSN.Models
 {
-    public class DBContext : DbContext
+    public class DBContext : IdentityDbContext<ApplicationUser>
     {
         #region Constructors
 
@@ -36,6 +37,9 @@ namespace ARSN.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Game>()
                 .HasOne(d => d.HomeTeam)
                 .WithMany(p => p.HomeGame)

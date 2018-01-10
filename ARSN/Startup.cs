@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ARSN.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ARSN
 {
@@ -25,6 +26,10 @@ namespace ARSN
         {
             services.AddDbContext<DBContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0"));
             services.AddMvc();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<DBContext>()
+                .AddDefaultTokenProviders();
             
         }
 
@@ -42,6 +47,8 @@ namespace ARSN
             }
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
