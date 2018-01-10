@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
@@ -30,7 +31,7 @@ namespace ARSN.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("OrganizerID");
+                    b.Property<Guid?>("OrganizerID");
 
                     b.Property<string>("SportType");
 
@@ -50,7 +51,7 @@ namespace ARSN.Migrations
 
                     b.Property<string>("AwayTeamID");
 
-                    b.Property<string>("CompetitionObjectCompetitionID");
+                    b.Property<string>("CompetitionID");
 
                     b.Property<string>("HomeResult");
 
@@ -64,7 +65,7 @@ namespace ARSN.Migrations
 
                     b.HasIndex("AwayTeamID");
 
-                    b.HasIndex("CompetitionObjectCompetitionID");
+                    b.HasIndex("CompetitionID");
 
                     b.HasIndex("HomeTeamID");
 
@@ -73,7 +74,7 @@ namespace ARSN.Migrations
 
             modelBuilder.Entity("ARSN.Models.Organizer", b =>
                 {
-                    b.Property<string>("OrganizerID")
+                    b.Property<Guid>("OrganizerID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("BirthDate");
@@ -129,9 +130,9 @@ namespace ARSN.Migrations
                         .HasForeignKey("AwayTeamID")
                         .HasConstraintName("FK_AwayGame");
 
-                    b.HasOne("ARSN.Models.Competition", "CompetitionObject")
+                    b.HasOne("ARSN.Models.Competition")
                         .WithMany("GameCollextion")
-                        .HasForeignKey("CompetitionObjectCompetitionID");
+                        .HasForeignKey("CompetitionID");
 
                     b.HasOne("ARSN.Models.Team", "HomeTeam")
                         .WithMany("HomeGame")

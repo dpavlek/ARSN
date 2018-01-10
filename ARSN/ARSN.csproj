@@ -9,6 +9,14 @@
     <Compile Remove="Migrations\20180108181157_LLLk.Designer.cs" />
     <Compile Remove="Migrations\20180108181707_Sreckooo.cs" />
     <Compile Remove="Migrations\20180108181707_Sreckooo.Designer.cs" />
+    <Compile Remove="Migrations\20180108181755_Sreckoo.cs" />
+    <Compile Remove="Migrations\20180108181755_Sreckoo.Designer.cs" />
+    <Compile Remove="Migrations\20180110093046_DBVersion5.cs" />
+    <Compile Remove="Migrations\20180110093046_DBVersion5.Designer.cs" />
+    <Compile Remove="Migrations\20180110093403_DBVersion6.cs" />
+    <Compile Remove="Migrations\20180110093403_DBVersion6.Designer.cs" />
+    <Compile Remove="Migrations\20180110100618_DBVersion7.cs" />
+    <Compile Remove="Migrations\20180110100618_DBVersion7.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

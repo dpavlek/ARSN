@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class Sreckoo : Migration
+    public partial class DBVersion72 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace ARSN.Migrations
                 name: "Organizer",
                 columns: table => new
                 {
-                    OrganizerID = table.Column<string>(nullable: false),
+                    OrganizerID = table.Column<Guid>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
@@ -50,7 +50,7 @@ namespace ARSN.Migrations
                     CompetitionBegin = table.Column<DateTime>(nullable: false),
                     CompetitionEnd = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    OrganizerID = table.Column<string>(nullable: true),
+                    OrganizerID = table.Column<Guid>(nullable: true),
                     SportType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -71,7 +71,7 @@ namespace ARSN.Migrations
                     GameID = table.Column<string>(nullable: false),
                     AwayResult = table.Column<string>(nullable: true),
                     AwayTeamID = table.Column<string>(nullable: true),
-                    CompetitionObjectCompetitionID = table.Column<string>(nullable: true),
+                    CompetitionID = table.Column<string>(nullable: true),
                     HomeResult = table.Column<string>(nullable: true),
                     HomeTeamID = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),
@@ -87,8 +87,8 @@ namespace ARSN.Migrations
                         principalColumn: "TeamID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Game_Competition_CompetitionObjectCompetitionID",
-                        column: x => x.CompetitionObjectCompetitionID,
+                        name: "FK_Game_Competition_CompetitionID",
+                        column: x => x.CompetitionID,
                         principalTable: "Competition",
                         principalColumn: "CompetitionID",
                         onDelete: ReferentialAction.Restrict);
@@ -111,9 +111,9 @@ namespace ARSN.Migrations
                 column: "AwayTeamID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_CompetitionObjectCompetitionID",
+                name: "IX_Game_CompetitionID",
                 table: "Game",
-                column: "CompetitionObjectCompetitionID");
+                column: "CompetitionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Game_HomeTeamID",

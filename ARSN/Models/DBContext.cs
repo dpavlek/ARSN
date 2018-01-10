@@ -8,15 +8,24 @@ namespace ARSN.Models
 {
     public class DBContext : DbContext
     {
+        #region Constructors
+
         public DBContext():base()
         {
         }
 
+        #endregion Constructors
+
+        #region Properties
         public DBContext(DbContextOptions<DBContext> options):base(options){ }
         public DbSet<Team> Team{get;set;}
         public DbSet<Organizer> Organizer { get; set; }
         public DbSet<Competition> Competition { get; set; }
         public DbSet<Game> Game { get; set; }
+
+        #endregion Properties
+
+        #region Methods
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -36,6 +45,12 @@ namespace ARSN.Models
                  .HasOne(d => d.AwayTeam)
                  .WithMany(p => p.AwayGame)
                  .HasConstraintName("FK_AwayGame");
+
+            modelBuilder.Entity<Organizer>().Property(x => x.OrganizerID).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Competition>().Property(x => x.CompetitionID).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Team>().Property(x => x.TeamID).ValueGeneratedOnAdd();
         }
+        #endregion Methods
     }
 }
