@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ARSN.Models.Competition>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SportType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompetitionBegin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompetitionEnd)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SportType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompetitionBegin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompetitionEnd)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CompetitionID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CompetitionID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CompetitionID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

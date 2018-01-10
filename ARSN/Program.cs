@@ -42,8 +42,10 @@ namespace ARSN
                     PhoneNumber = "09969854645",
                     Gender = "M"
                 };
-                context.Organizer.Add(OrganizerObject);
-                context.SaveChanges();
+              //  context.Organizer.Add(OrganizerObject);
+
+
+               // context.SaveChanges();
 
                 #endregion Adding Values Into Database
             }

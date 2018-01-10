@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class DBVersion72 : Migration
+    public partial class DBVersion9 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +20,8 @@ namespace ARSN.Migrations
                     Organisation = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true)
+                    Surname = table.Column<string>(nullable: true),
+                    Verified = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +32,7 @@ namespace ARSN.Migrations
                 name: "Team",
                 columns: table => new
                 {
-                    TeamID = table.Column<string>(nullable: false),
+                    TeamID = table.Column<Guid>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Organisation = table.Column<string>(nullable: true),
@@ -46,7 +47,7 @@ namespace ARSN.Migrations
                 name: "Competition",
                 columns: table => new
                 {
-                    CompetitionID = table.Column<string>(nullable: false),
+                    CompetitionID = table.Column<Guid>(nullable: false),
                     CompetitionBegin = table.Column<DateTime>(nullable: false),
                     CompetitionEnd = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -68,12 +69,12 @@ namespace ARSN.Migrations
                 name: "Game",
                 columns: table => new
                 {
-                    GameID = table.Column<string>(nullable: false),
+                    GameID = table.Column<Guid>(nullable: false),
                     AwayResult = table.Column<string>(nullable: true),
-                    AwayTeamID = table.Column<string>(nullable: true),
-                    CompetitionID = table.Column<string>(nullable: true),
+                    AwayTeamTeamID = table.Column<Guid>(nullable: true),
+                    CompetitionID = table.Column<Guid>(nullable: true),
                     HomeResult = table.Column<string>(nullable: true),
-                    HomeTeamID = table.Column<string>(nullable: true),
+                    HomeTeamTeamID = table.Column<Guid>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     Winner = table.Column<string>(nullable: true)
                 },
@@ -82,7 +83,7 @@ namespace ARSN.Migrations
                     table.PrimaryKey("PK_Game", x => x.GameID);
                     table.ForeignKey(
                         name: "FK_AwayGame",
-                        column: x => x.AwayTeamID,
+                        column: x => x.AwayTeamTeamID,
                         principalTable: "Team",
                         principalColumn: "TeamID",
                         onDelete: ReferentialAction.Restrict);
@@ -94,7 +95,7 @@ namespace ARSN.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_HomeGame",
-                        column: x => x.HomeTeamID,
+                        column: x => x.HomeTeamTeamID,
                         principalTable: "Team",
                         principalColumn: "TeamID",
                         onDelete: ReferentialAction.Restrict);
@@ -106,9 +107,9 @@ namespace ARSN.Migrations
                 column: "OrganizerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_AwayTeamID",
+                name: "IX_Game_AwayTeamTeamID",
                 table: "Game",
-                column: "AwayTeamID");
+                column: "AwayTeamTeamID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Game_CompetitionID",
@@ -116,9 +117,9 @@ namespace ARSN.Migrations
                 column: "CompetitionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_HomeTeamID",
+                name: "IX_Game_HomeTeamTeamID",
                 table: "Game",
-                column: "HomeTeamID");
+                column: "HomeTeamTeamID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -22,6 +22,7 @@ namespace ARSN.Models
         public string PhoneNumber { get; set; }
         public string Gender { get; set; }
         public string Password { get; set; }
+        public bool Verified { get; set; }
         public ICollection<Competition> Competitions { get; set; }
 
         #endregion Properties

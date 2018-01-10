@@ -9,22 +9,22 @@ using ARSN.Models;
 
 namespace ARSN.Controllers
 {
-    public class OrganizersController : Controller
+    public class GamesController : Controller
     {
         private readonly DBContext _context;
 
-        public OrganizersController(DBContext context)
+        public GamesController(DBContext context)
         {
             _context = context;
         }
 
-        // GET: Organizers
+        // GET: Games
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Organizer.ToListAsync());
+            return View(await _context.Game.ToListAsync());
         }
 
-        // GET: Organizers/Details/5
+        // GET: Games/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -32,40 +32,40 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer
-                .SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var game = await _context.Game
+                .SingleOrDefaultAsync(m => m.GameID == id);
+            if (game == null)
             {
                 return NotFound();
             }
 
-            return View(organizer);
+            return View(game);
         }
 
-        // GET: Organizers/Create
+        // GET: Games/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Organizers/Create
+        // POST: Games/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Create([Bind("GameID,Type,HomeResult,AwayResult,Winner")] Game game)
         {
             if (ModelState.IsValid)
             {
-                organizer.OrganizerID = Guid.NewGuid();
-                _context.Add(organizer);
+                game.GameID = Guid.NewGuid();
+                _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(organizer);
+            return View(game);
         }
 
-        // GET: Organizers/Edit/5
+        // GET: Games/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer.SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var game = await _context.Game.SingleOrDefaultAsync(m => m.GameID == id);
+            if (game == null)
             {
                 return NotFound();
             }
-            return View(organizer);
+            return View(game);
         }
 
-        // POST: Organizers/Edit/5
+        // POST: Games/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("GameID,Type,HomeResult,AwayResult,Winner")] Game game)
         {
-            if (id != organizer.OrganizerID)
+            if (id != game.GameID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ARSN.Controllers
             {
                 try
                 {
-                    _context.Update(organizer);
+                    _context.Update(game);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrganizerExists(organizer.OrganizerID))
+                    if (!GameExists(game.GameID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ARSN.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(organizer);
+            return View(game);
         }
 
-        // GET: Organizers/Delete/5
+        // GET: Games/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer
-                .SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var game = await _context.Game
+                .SingleOrDefaultAsync(m => m.GameID == id);
+            if (game == null)
             {
                 return NotFound();
             }
 
-            return View(organizer);
+            return View(game);
         }
 
-        // POST: Organizers/Delete/5
+        // POST: Games/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var organizer = await _context.Organizer.SingleOrDefaultAsync(m => m.OrganizerID == id);
-            _context.Organizer.Remove(organizer);
+            var game = await _context.Game.SingleOrDefaultAsync(m => m.GameID == id);
+            _context.Game.Remove(game);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrganizerExists(Guid id)
+        private bool GameExists(Guid id)
         {
-            return _context.Organizer.Any(e => e.OrganizerID == id);
+            return _context.Game.Any(e => e.GameID == id);
         }
     }
 }

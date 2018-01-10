@@ -9,22 +9,22 @@ using ARSN.Models;
 
 namespace ARSN.Controllers
 {
-    public class OrganizersController : Controller
+    public class TeamsController : Controller
     {
         private readonly DBContext _context;
 
-        public OrganizersController(DBContext context)
+        public TeamsController(DBContext context)
         {
             _context = context;
         }
 
-        // GET: Organizers
+        // GET: Teams
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Organizer.ToListAsync());
+            return View(await _context.Team.ToListAsync());
         }
 
-        // GET: Organizers/Details/5
+        // GET: Teams/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -32,40 +32,40 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer
-                .SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var team = await _context.Team
+                .SingleOrDefaultAsync(m => m.TeamID == id);
+            if (team == null)
             {
                 return NotFound();
             }
 
-            return View(organizer);
+            return View(team);
         }
 
-        // GET: Organizers/Create
+        // GET: Teams/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Organizers/Create
+        // POST: Teams/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Create([Bind("TeamID,Name,Organisation,Email,TrainerName")] Team team)
         {
             if (ModelState.IsValid)
             {
-                organizer.OrganizerID = Guid.NewGuid();
-                _context.Add(organizer);
+                team.TeamID = Guid.NewGuid();
+                _context.Add(team);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(organizer);
+            return View(team);
         }
 
-        // GET: Organizers/Edit/5
+        // GET: Teams/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer.SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var team = await _context.Team.SingleOrDefaultAsync(m => m.TeamID == id);
+            if (team == null)
             {
                 return NotFound();
             }
-            return View(organizer);
+            return View(team);
         }
 
-        // POST: Organizers/Edit/5
+        // POST: Teams/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("TeamID,Name,Organisation,Email,TrainerName")] Team team)
         {
-            if (id != organizer.OrganizerID)
+            if (id != team.TeamID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ARSN.Controllers
             {
                 try
                 {
-                    _context.Update(organizer);
+                    _context.Update(team);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrganizerExists(organizer.OrganizerID))
+                    if (!TeamExists(team.TeamID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ARSN.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(organizer);
+            return View(team);
         }
 
-        // GET: Organizers/Delete/5
+        // GET: Teams/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer
-                .SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var team = await _context.Team
+                .SingleOrDefaultAsync(m => m.TeamID == id);
+            if (team == null)
             {
                 return NotFound();
             }
 
-            return View(organizer);
+            return View(team);
         }
 
-        // POST: Organizers/Delete/5
+        // POST: Teams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var organizer = await _context.Organizer.SingleOrDefaultAsync(m => m.OrganizerID == id);
-            _context.Organizer.Remove(organizer);
+            var team = await _context.Team.SingleOrDefaultAsync(m => m.TeamID == id);
+            _context.Team.Remove(team);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrganizerExists(Guid id)
+        private bool TeamExists(Guid id)
         {
-            return _context.Organizer.Any(e => e.OrganizerID == id);
+            return _context.Team.Any(e => e.TeamID == id);
         }
     }
 }

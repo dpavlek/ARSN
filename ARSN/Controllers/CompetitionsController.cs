@@ -9,22 +9,22 @@ using ARSN.Models;
 
 namespace ARSN.Controllers
 {
-    public class OrganizersController : Controller
+    public class CompetitionsController : Controller
     {
         private readonly DBContext _context;
 
-        public OrganizersController(DBContext context)
+        public CompetitionsController(DBContext context)
         {
             _context = context;
         }
 
-        // GET: Organizers
+        // GET: Competitions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Organizer.ToListAsync());
+            return View(await _context.Competition.ToListAsync());
         }
 
-        // GET: Organizers/Details/5
+        // GET: Competitions/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -32,40 +32,40 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer
-                .SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var competition = await _context.Competition
+                .SingleOrDefaultAsync(m => m.CompetitionID == id);
+            if (competition == null)
             {
                 return NotFound();
             }
 
-            return View(organizer);
+            return View(competition);
         }
 
-        // GET: Organizers/Create
+        // GET: Competitions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Organizers/Create
+        // POST: Competitions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition)
         {
             if (ModelState.IsValid)
             {
-                organizer.OrganizerID = Guid.NewGuid();
-                _context.Add(organizer);
+                competition.CompetitionID = Guid.NewGuid();
+                _context.Add(competition);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(organizer);
+            return View(competition);
         }
 
-        // GET: Organizers/Edit/5
+        // GET: Competitions/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer.SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var competition = await _context.Competition.SingleOrDefaultAsync(m => m.CompetitionID == id);
+            if (competition == null)
             {
                 return NotFound();
             }
-            return View(organizer);
+            return View(competition);
         }
 
-        // POST: Organizers/Edit/5
+        // POST: Competitions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("OrganizerID,Name,Surname,Email,BirthDate,Organisation,PhoneNumber,Gender,Password,Verified")] Organizer organizer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition)
         {
-            if (id != organizer.OrganizerID)
+            if (id != competition.CompetitionID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ARSN.Controllers
             {
                 try
                 {
-                    _context.Update(organizer);
+                    _context.Update(competition);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrganizerExists(organizer.OrganizerID))
+                    if (!CompetitionExists(competition.CompetitionID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ARSN.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(organizer);
+            return View(competition);
         }
 
-        // GET: Organizers/Delete/5
+        // GET: Competitions/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var organizer = await _context.Organizer
-                .SingleOrDefaultAsync(m => m.OrganizerID == id);
-            if (organizer == null)
+            var competition = await _context.Competition
+                .SingleOrDefaultAsync(m => m.CompetitionID == id);
+            if (competition == null)
             {
                 return NotFound();
             }
 
-            return View(organizer);
+            return View(competition);
         }
 
-        // POST: Organizers/Delete/5
+        // POST: Competitions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var organizer = await _context.Organizer.SingleOrDefaultAsync(m => m.OrganizerID == id);
-            _context.Organizer.Remove(organizer);
+            var competition = await _context.Competition.SingleOrDefaultAsync(m => m.CompetitionID == id);
+            _context.Competition.Remove(competition);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrganizerExists(Guid id)
+        private bool CompetitionExists(Guid id)
         {
-            return _context.Organizer.Any(e => e.OrganizerID == id);
+            return _context.Competition.Any(e => e.CompetitionID == id);
         }
     }
 }

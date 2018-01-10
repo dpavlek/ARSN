@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180110101504_DBVersion7.2")]
-    partial class DBVersion72
+    [Migration("20180110130209_DBVersion9")]
+    partial class DBVersion9
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace ARSN.Migrations
 
             modelBuilder.Entity("ARSN.Models.Competition", b =>
                 {
-                    b.Property<string>("CompetitionID")
+                    b.Property<Guid>("CompetitionID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CompetitionBegin");
@@ -45,18 +45,18 @@ namespace ARSN.Migrations
 
             modelBuilder.Entity("ARSN.Models.Game", b =>
                 {
-                    b.Property<string>("GameID")
+                    b.Property<Guid>("GameID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AwayResult");
 
-                    b.Property<string>("AwayTeamID");
+                    b.Property<Guid?>("AwayTeamTeamID");
 
-                    b.Property<string>("CompetitionID");
+                    b.Property<Guid?>("CompetitionID");
 
                     b.Property<string>("HomeResult");
 
-                    b.Property<string>("HomeTeamID");
+                    b.Property<Guid?>("HomeTeamTeamID");
 
                     b.Property<string>("Type");
 
@@ -64,11 +64,11 @@ namespace ARSN.Migrations
 
                     b.HasKey("GameID");
 
-                    b.HasIndex("AwayTeamID");
+                    b.HasIndex("AwayTeamTeamID");
 
                     b.HasIndex("CompetitionID");
 
-                    b.HasIndex("HomeTeamID");
+                    b.HasIndex("HomeTeamTeamID");
 
                     b.ToTable("Game");
                 });
@@ -94,6 +94,8 @@ namespace ARSN.Migrations
 
                     b.Property<string>("Surname");
 
+                    b.Property<bool>("Verified");
+
                     b.HasKey("OrganizerID");
 
                     b.ToTable("Organizer");
@@ -101,7 +103,7 @@ namespace ARSN.Migrations
 
             modelBuilder.Entity("ARSN.Models.Team", b =>
                 {
-                    b.Property<string>("TeamID")
+                    b.Property<Guid>("TeamID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email");
@@ -128,7 +130,7 @@ namespace ARSN.Migrations
                 {
                     b.HasOne("ARSN.Models.Team", "AwayTeam")
                         .WithMany("AwayGame")
-                        .HasForeignKey("AwayTeamID")
+                        .HasForeignKey("AwayTeamTeamID")
                         .HasConstraintName("FK_AwayGame");
 
                     b.HasOne("ARSN.Models.Competition")
@@ -137,7 +139,7 @@ namespace ARSN.Migrations
 
                     b.HasOne("ARSN.Models.Team", "HomeTeam")
                         .WithMany("HomeGame")
-                        .HasForeignKey("HomeTeamID")
+                        .HasForeignKey("HomeTeamTeamID")
                         .HasConstraintName("FK_HomeGame");
                 });
 #pragma warning restore 612, 618
