@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ARSN.ViewModels
 {
@@ -11,5 +12,17 @@ namespace ARSN.ViewModels
         [Required, MinLength(6), MaxLength(50), DataType(DataType.Password), Display(Name = "Confirm Password")]
         [Compare("Password",ErrorMessage = "Lozinke se ne podudaraju.")]
         public string ConfirmPassword { get; set; }
+        [Display(Name = "Ime")]
+        public string Name { get; set; }
+        [Display(Name = "Prezime")]
+        public string Surname { get; set; }
+        [DataType(DataType.Date), Display(Name ="Datum Rođenja")]
+        public DateTime BirthDate { get; set; }
+        [Required, Display(Name ="Organizacija")]
+        public string Organisation { get; set; }
+        [DataType(DataType.PhoneNumber), Display(Name ="Broj telefona")]
+        public string PhoneNumber { get; set; }
+        [MaxLength(1), Display(Name ="Spol")]
+        public string Gender { get; set; }
     }
 }

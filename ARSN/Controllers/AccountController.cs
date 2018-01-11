@@ -21,6 +21,29 @@ namespace ARSN.Controllers
         }
 
         [HttpGet]
+        public IActionResult Login()
+        {
+            ViewBag.Title = "Login Page";
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError("", "Invalid Login Attempt.");
+                return View(vm);
+            }
+            return View(vm);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -32,7 +55,7 @@ namespace ARSN.Controllers
             if (ModelState.IsValid)
             {
 
-                var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email };
+                var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email, BirthDate=vm.BirthDate, Name=vm.Name, Surname=vm.Surname, Gender=vm.Gender, Organisation=vm.Organisation, PhoneNumber=vm.PhoneNumber};
                 var result = await _userManager.CreateAsync(user, vm.Password);
 
                 if (result.Succeeded)
