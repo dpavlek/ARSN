@@ -22,7 +22,10 @@ namespace ARSN.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Game.ToListAsync());
+            return View(await _context.Game
+                .Include(s=>s.HomeTeam)
+                .Include(d=>d.AwayTeam)
+                .ToListAsync());
         }
 
         // GET: Games/Details/5
@@ -34,7 +37,10 @@ namespace ARSN.Controllers
             }
 
             var game = await _context.Game
+                .Include(s => s.HomeTeam)
+                .Include(d => d.AwayTeam)
                 .SingleOrDefaultAsync(m => m.GameID == id);
+
             if (game == null)
             {
                 return NotFound();
@@ -46,6 +52,8 @@ namespace ARSN.Controllers
         // GET: Games/Create
         public async Task<IActionResult> Create()
         {
+            PopulateHomeTeamsDropDownList();
+            PopulateAwayTeamsDropDownList();
             var user = await _userManager.GetUserAsync(User);
             if (User.Identity.IsAuthenticated && user.Verified)
             {
@@ -62,15 +70,28 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GameID,Type,HomeResult,AwayResult,Winner")] Game game)
+        public async Task<IActionResult> Create(Game game)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Request.Form["HomeTeam"]!="" && Request.Form["AwayTeam"] != "")
             {
-                game.GameID = Guid.NewGuid();
+               Guid HomeTeamID = new Guid(Request.Form["HomeTeam"]);
+               var homeTeam = await _context.Team
+                    .SingleOrDefaultAsync(m => m.TeamID == HomeTeamID);
+                game.HomeTeam = homeTeam;
+               // System.IO.File.WriteAllText(@"D:\home.txt", homeTeam.Name);
+
+                Guid AwayTeamID = new Guid(Request.Form["AwayTeam"]);
+                var awayTeam = await _context.Team
+                     .SingleOrDefaultAsync(m => m.TeamID == AwayTeamID);
+                game.AwayTeam = awayTeam;
+                //System.IO.File.WriteAllText(@"D:\away.txt", awayTeam.Name);
+
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            PopulateHomeTeamsDropDownList(game.HomeTeam);
+            PopulateAwayTeamsDropDownList(game.AwayTeam);
             return View(game);
         }
 
@@ -84,12 +105,13 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game.SingleOrDefaultAsync(m => m.GameID == id);
+            var game = await _context.Game.AsNoTracking().SingleOrDefaultAsync(m => m.GameID == id);
             if (game == null)
             {
                 return NotFound();
             }
-
+            PopulateHomeTeamsDropDownList(game.HomeTeam);
+            PopulateAwayTeamsDropDownList(game.AwayTeam);
             if (User.Identity.IsAuthenticated && user.Verified)
             {
                 return View(game);
@@ -132,7 +154,24 @@ namespace ARSN.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            PopulateHomeTeamsDropDownList(game.HomeTeam);
+            PopulateAwayTeamsDropDownList(game.AwayTeam);
             return View(game);
+        }
+
+        private void PopulateHomeTeamsDropDownList(object selectedHomeTeam=null)
+        {
+            var homeTeamQuery = from d in _context.Team 
+                                orderby d.Name 
+                                select d;
+            ViewBag.HomeTeam = new SelectList(homeTeamQuery.AsNoTracking(), "TeamID", "Name", selectedHomeTeam);
+        }
+        private void PopulateAwayTeamsDropDownList(object selectedAwayTeam = null)
+        {
+            var awayTeamQuery = from d in _context.Team
+                                orderby d.Name
+                                select d;
+            ViewBag.AwayTeam = new SelectList(awayTeamQuery.AsNoTracking(), "TeamID", "Name", selectedAwayTeam);
         }
 
         // GET: Games/Delete/5
@@ -168,5 +207,7 @@ namespace ARSN.Controllers
         {
             return _context.Game.Any(e => e.GameID == id);
         }
+
+ 
     }
 }

@@ -19,8 +19,6 @@ namespace ARSN.Models
         public string Organisation { get; set; }
         public string Email { get; set; }
         public string TrainerName { get; set; }
-        public ICollection<Game> HomeGame { get; set; }
-        public ICollection<Game> AwayGame { get; set; }
 
         #endregion Properties
     }

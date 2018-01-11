@@ -40,16 +40,6 @@ namespace ARSN.Models
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Game>()
-                .HasOne(d => d.HomeTeam)
-                .WithMany(p => p.HomeGame)
-                .HasConstraintName("FK_HomeGame");
-
-            modelBuilder.Entity<Game>()
-                 .HasOne(d => d.AwayTeam)
-                 .WithMany(p => p.AwayGame)
-                 .HasConstraintName("FK_AwayGame");
-
             modelBuilder.Entity<Organizer>().Property(x => x.OrganizerID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Competition>().Property(x => x.CompetitionID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();

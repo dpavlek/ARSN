@@ -71,16 +71,16 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition)
+        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string button)
         {
-            if (ModelState.IsValid)
-            {
-                competition.CompetitionID = Guid.NewGuid();
-                _context.Add(competition);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(competition);
+                if (ModelState.IsValid)
+                {
+                    //System.IO.File.WriteAllText(@"D:\request.txt", submit);
+                    _context.Add(competition);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(competition);        
         }
 
         // GET: Competitions/Edit/5

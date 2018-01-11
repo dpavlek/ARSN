@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180110163904_collectionCompetsAdded")]
-    partial class collectionCompetsAdded
+    [Migration("20180111094619_DBVersion11")]
+    partial class DBVersion11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,15 +97,11 @@ namespace ARSN.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("OrganizerID");
-
                     b.Property<string>("SportType");
 
                     b.HasKey("CompetitionID");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Competition");
                 });
@@ -330,27 +326,21 @@ namespace ARSN.Migrations
                     b.HasOne("ARSN.Models.ApplicationUser")
                         .WithMany("Competitions")
                         .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("ARSN.Models.Organizer")
-                        .WithMany("Competitions")
-                        .HasForeignKey("OrganizerID");
                 });
 
             modelBuilder.Entity("ARSN.Models.Game", b =>
                 {
                     b.HasOne("ARSN.Models.Team", "AwayTeam")
-                        .WithMany("AwayGame")
-                        .HasForeignKey("AwayTeamTeamID")
-                        .HasConstraintName("FK_AwayGame");
+                        .WithMany()
+                        .HasForeignKey("AwayTeamTeamID");
 
                     b.HasOne("ARSN.Models.Competition")
-                        .WithMany("GameCollextion")
+                        .WithMany("GameCollection")
                         .HasForeignKey("CompetitionID");
 
                     b.HasOne("ARSN.Models.Team", "HomeTeam")
-                        .WithMany("HomeGame")
-                        .HasForeignKey("HomeTeamTeamID")
-                        .HasConstraintName("FK_HomeGame");
+                        .WithMany()
+                        .HasForeignKey("HomeTeamTeamID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
