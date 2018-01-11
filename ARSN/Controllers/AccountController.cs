@@ -39,6 +39,55 @@ namespace ARSN.Controllers
             }
         }
 
+        // GET: Organizers/Edit/5
+        public async Task<IActionResult> Verify(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var account = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return View(account);
+        }
+
+        // POST: Organizers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ActionName("Verify")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerifyConfirmed(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var accountToUpdate = await _context.Users.SingleOrDefaultAsync(s => s.Id == id);
+            if (await TryUpdateModelAsync<ApplicationUser>(
+                accountToUpdate,
+                "",
+                s => s.Verified))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException /* ex */)
+                {
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
+                }
+            }
+            return View(accountToUpdate);
+        }
+
         // GET: Organizers/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -120,6 +169,11 @@ namespace ARSN.Controllers
                 }
             }
             return View(vm);
+        }
+
+        private bool AccountExists(string id)
+        {
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }
