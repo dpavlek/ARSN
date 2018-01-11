@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ARSN.Models;
+using CryptoHelper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ARSN.Models;
-using CryptoHelper;
 
 namespace ARSN.Controllers
 {
@@ -22,7 +20,17 @@ namespace ARSN.Controllers
         // GET: Organizers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Organizer.ToListAsync());
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.Identity.Name == "arsnferit@protonmail.com") ;
+                {
+                    return View(await _context.Organizer.ToListAsync());
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Organizers/Details/5
