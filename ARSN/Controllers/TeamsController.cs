@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ARSN.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ARSN.Models;
 
 namespace ARSN.Controllers
 {
     public class TeamsController : Controller
     {
         private readonly DBContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TeamsController(DBContext context)
+        public TeamsController(DBContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Teams
@@ -43,9 +44,17 @@ namespace ARSN.Controllers
         }
 
         // GET: Teams/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Teams/Create
@@ -78,7 +87,15 @@ namespace ARSN.Controllers
             {
                 return NotFound();
             }
-            return View(team);
+            var user = await _userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View(team);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Teams/Edit/5

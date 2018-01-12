@@ -26,12 +26,9 @@ namespace ARSN.Controllers
         // GET: Organizers
         public async Task<IActionResult> Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && User.Identity.Name == "arsnferit@protonmail.com")
             {
-                if (User.Identity.Name == "arsnferit@protonmail.com") ;
-                {
-                    return View(await _context.Users.ToListAsync());
-                }
+                 return View(await _context.Users.ToListAsync());
             }
             else
             {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using ARSN.Models;
 
 namespace ARSN.Controllers
@@ -12,10 +13,12 @@ namespace ARSN.Controllers
     public class CompetitionsController : Controller
     {
         private readonly DBContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CompetitionsController(DBContext context)
+        public CompetitionsController(DBContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Competitions
@@ -43,10 +46,24 @@ namespace ARSN.Controllers
         }
 
         // GET: Competitions/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated)
+            {
+                if (user.Verified)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Competitions/Create
@@ -74,6 +91,8 @@ namespace ARSN.Controllers
         // GET: Competitions/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            var user = await _userManager.GetUserAsync(User);
+
             if (id == null)
             {
                 return NotFound();
@@ -84,7 +103,14 @@ namespace ARSN.Controllers
             {
                 return NotFound();
             }
-            return View(competition);
+            if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View(competition);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Competitions/Edit/5

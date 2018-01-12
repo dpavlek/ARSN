@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ARSN.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ARSN.Models;
 
 namespace ARSN.Controllers
 {
     public class GamesController : Controller
     {
         private readonly DBContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GamesController(DBContext context)
+        public GamesController(DBContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Games
@@ -49,11 +50,19 @@ namespace ARSN.Controllers
         }
 
         // GET: Games/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             PopulateHomeTeamsDropDownList();
             PopulateAwayTeamsDropDownList();
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Games/Create
@@ -89,6 +98,8 @@ namespace ARSN.Controllers
         // GET: Games/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            var user = await _userManager.GetUserAsync(User);
+
             if (id == null)
             {
                 return NotFound();
@@ -101,7 +112,14 @@ namespace ARSN.Controllers
             }
             PopulateHomeTeamsDropDownList(game.HomeTeam);
             PopulateAwayTeamsDropDownList(game.AwayTeam);
-            return View(game);
+            if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View(game);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Games/Edit/5
