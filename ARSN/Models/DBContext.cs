@@ -20,7 +20,6 @@ namespace ARSN.Models
         #region Properties
         public DBContext(DbContextOptions<DBContext> options):base(options){ }
         public DbSet<Team> Team{get;set;}
-        public DbSet<Organizer> Organizer { get; set; }
         public DbSet<Competition> Competition { get; set; }
         public DbSet<Game> Game { get; set; }
 
@@ -40,7 +39,7 @@ namespace ARSN.Models
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Organizer>().Property(x => x.OrganizerID).ValueGeneratedOnAdd();
+            //modelBuilder.Entity<Organizer>().Property(x => x.OrganizerID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Competition>().Property(x => x.CompetitionID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Team>().Property(x => x.TeamID).ValueGeneratedOnAdd();

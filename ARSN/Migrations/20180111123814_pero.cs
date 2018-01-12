@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class DBVersion11 : Migration
+    public partial class pero : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,39 +52,6 @@ namespace ARSN.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Organizer",
-                columns: table => new
-                {
-                    OrganizerID = table.Column<Guid>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    BirthDate = table.Column<DateTime>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: false),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    Gender = table.Column<string>(maxLength: 1, nullable: true),
-                    Id = table.Column<string>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Organisation = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(maxLength: 50, nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    Verified = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Organizer", x => x.OrganizerID);
                 });
 
             migrationBuilder.CreateTable(
@@ -345,9 +312,6 @@ namespace ARSN.Migrations
 
             migrationBuilder.DropTable(
                 name: "Game");
-
-            migrationBuilder.DropTable(
-                name: "Organizer");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,10 +20,14 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <div class="jumbotron">
+        <p class="font-effect-fire-animation text-center" id="vatra">ARSN</p>
+        <p class="text-center" id="podnaslov">Aplikacija za Rezultate Sportskih Natjecanja</p>
+    </div>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -28,29 +35,36 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ARSN</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Organizers" asp-action="Index">Organizers</a></li>
-                    <li><a asp-area="" asp-controller="Competitions" asp-action="Index">Competition</a></li>
-                    <li><a asp-area="" asp-controller="Games" asp-action="Index">Game</a></li>
-                    <li><a asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Index">Accounts</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+            <div class="navbar-collapse collapse" id="myNavbar">
+                <ul class="nav navbar-nav list-hover-slide">
+                    <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a id="color-me"asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <!-- User authentification, if user not authentificated he should not be able to see this-->
+                    @if (User.Identity.IsAuthenticated)
+                   {
+                    <li><a id="color-me" asp-area="" asp-controller="Competitions" asp-action="Index">Competition</a></li>
+                    <li><a id="color-me" asp-area="" asp-controller="Games" asp-action="Index">Game</a></li>
+                    <li><a id="color-me" asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
+                    <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Index">Verify Account</a></li>
+                   }
                 </ul>
+                <ul class="nav navbar-nav navbar-right list-hover-slide">
+                    <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                </ul> 
             </div>
         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2017 - ARSN</p>
-        </footer>
+        
     </div>
-
+    <div class="content"></div>
+    <footer>
+        <p class="text-center">ARSN &copy; 2018, Fakultet Elektrotehnike Racunarstva i Informacijskih Tehnologija</p>
+    </footer>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

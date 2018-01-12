@@ -5,25 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180108181157_LLLk.cs" />
-    <Compile Remove="Migrations\20180108181157_LLLk.Designer.cs" />
-    <Compile Remove="Migrations\20180108181707_Sreckooo.cs" />
-    <Compile Remove="Migrations\20180108181707_Sreckooo.Designer.cs" />
-    <Compile Remove="Migrations\20180108181755_Sreckoo.cs" />
-    <Compile Remove="Migrations\20180108181755_Sreckoo.Designer.cs" />
-    <Compile Remove="Migrations\20180110093046_DBVersion5.cs" />
-    <Compile Remove="Migrations\20180110093046_DBVersion5.Designer.cs" />
-    <Compile Remove="Migrations\20180110093403_DBVersion6.cs" />
-    <Compile Remove="Migrations\20180110093403_DBVersion6.Designer.cs" />
-    <Compile Remove="Migrations\20180110100618_DBVersion7.cs" />
-    <Compile Remove="Migrations\20180110100618_DBVersion7.Designer.cs" />
-    <Compile Remove="Migrations\20180110160644_IdentityAdded.cs" />
-    <Compile Remove="Migrations\20180110160644_IdentityAdded.Designer.cs" />
-    <Compile Remove="Migrations\20180110161513_IdentityAdded.cs" />
-    <Compile Remove="Migrations\20180110161513_IdentityAdded.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CryptoHelper" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />

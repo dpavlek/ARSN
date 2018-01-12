@@ -54,9 +54,14 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string button)
+        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string button, string submit)
         {
-                if (ModelState.IsValid)
+            if (button == "Dodaj timove") return RedirectToAction("Create", "Teams");
+            if (button == "Ručno dodavanje parova")
+            {
+
+            }
+            if (ModelState.IsValid)
                 {
                     //System.IO.File.WriteAllText(@"D:\request.txt", submit);
                     _context.Add(competition);
