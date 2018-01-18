@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180118160128_kfjf")]
-    partial class kfjf
+    [Migration("20180118180341_jozo")]
+    partial class jozo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

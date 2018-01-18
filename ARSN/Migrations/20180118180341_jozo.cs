@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class kfjf : Migration
+    public partial class jozo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -81,14 +81,16 @@ namespace ARSN.Controllers
             var homeTeam = await _context.Team
                  .SingleOrDefaultAsync(m => m.TeamID == HomeTeamID);
             //game.HomeTeam = homeTeam;
-            System.IO.File.WriteAllText(@"D:\home.txt", homeTeam.Name);
 
             Guid AwayTeamID = new Guid(Request.Form["AwayTeam"]);
             var awayTeam = await _context.Team
                  .SingleOrDefaultAsync(m => m.TeamID == AwayTeamID);
             //game.AwayTeam = awayTeam;
-            System.IO.File.WriteAllText(@"D:\away.txt", awayTeam.Name);
-
+            if (button == "Dodaj timove u natjecanje")
+            {
+                System.IO.File.WriteAllText(@"E:\home.txt", homeTeam.Name);
+                System.IO.File.WriteAllText(@"E:\away.txt", awayTeam.Name);
+            }
             if (button == "Dodaj timove") return RedirectToAction("Create", "Teams");
             if (button == "Ručno dodavanje parova")
             {
@@ -204,14 +206,14 @@ namespace ARSN.Controllers
             var homeTeamQuery = from d in _context.Team
                                 orderby d.Name
                                 select d;
-            ViewBag.HomeTeam = new SelectList(homeTeamQuery.AsNoTracking(), "TeamID", "Name", selectedHomeTeam);
+            ViewBag.HomeTeam = new SelectList(homeTeamQuery.AsNoTracking(), "Name", "Name", selectedHomeTeam);
         }
         private void PopulateAwayTeamsDropDownList(object selectedAwayTeam = null)
         {
             var awayTeamQuery = from d in _context.Team
                                 orderby d.Name
                                 select d;
-            ViewBag.AwayTeam = new SelectList(awayTeamQuery.AsNoTracking(), "TeamID", "Name", selectedAwayTeam);
+            ViewBag.AwayTeam = new SelectList(awayTeamQuery.AsNoTracking(), "Name", "Name", selectedAwayTeam);
         }
 
     }

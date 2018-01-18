@@ -4,6 +4,21 @@
         button.addEventListener('click', hideshow, false);
 
         function hideshow() {
-            document.getElementById('hidd').style.display = 'none';
+            document.getElementById('remove_hidden').classList.remove("hidden");
             
-        }   
+        } 
+
+        var button1 = document.getElementById('list_it')
+        button1.addEventListener('click', myFunction, false);
+
+function myFunction(list) {
+    var text = "";
+    var inputs = document.getElementById("list_away");
+    for (var i = 0; i < inputs.length; i++) {
+        text += inputs[i].value;
+    }
+    var li = document.createElement("li");
+    var node = document.createTextNode(text);
+    li.appendChild(node);
+    document.getElementById("list").appendChild(li);
+}
