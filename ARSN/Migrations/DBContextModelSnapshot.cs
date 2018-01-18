@@ -135,65 +135,6 @@ namespace ARSN.Migrations
                     b.ToTable("Game");
                 });
 
-            modelBuilder.Entity("ARSN.Models.Organizer", b =>
-                {
-                    b.Property<Guid>("OrganizerID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<DateTime>("BirthDate");
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("Gender")
-                        .HasMaxLength(1);
-
-                    b.Property<string>("Id");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("NormalizedEmail");
-
-                    b.Property<string>("NormalizedUserName");
-
-                    b.Property<string>("Organisation");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("Surname");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName");
-
-                    b.Property<bool>("Verified");
-
-                    b.HasKey("OrganizerID");
-
-                    b.ToTable("Organizer");
-                });
-
             modelBuilder.Entity("ARSN.Models.Team", b =>
                 {
                     b.Property<Guid>("TeamID")

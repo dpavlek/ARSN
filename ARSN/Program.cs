@@ -28,7 +28,7 @@ namespace ARSN
 
                context1.SaveChanges();
              }*/
-            using (var context = new DBContext())
+           /* using (var context = new DBContext())
             {
                 #region Adding Values Into Database
 
@@ -38,7 +38,7 @@ namespace ARSN
                // context.SaveChanges();
 
                 #endregion Adding Values Into Database
-            }
+            }*/
             BuildWebHost(args).Run();
             
         }

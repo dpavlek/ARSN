@@ -39,6 +39,7 @@ namespace ARSN.Models
 
             base.OnModelCreating(modelBuilder);
 
+
             modelBuilder.Entity<Competition>().Property(x => x.CompetitionID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Team>().Property(x => x.TeamID).ValueGeneratedOnAdd();
