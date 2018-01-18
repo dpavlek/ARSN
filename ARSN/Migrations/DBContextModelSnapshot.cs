@@ -120,6 +120,8 @@ namespace ARSN.Migrations
 
                     b.Property<Guid?>("HomeTeamTeamID");
 
+                    b.Property<Guid?>("RoundID");
+
                     b.Property<string>("Type");
 
                     b.Property<string>("Winner");
@@ -132,7 +134,21 @@ namespace ARSN.Migrations
 
                     b.HasIndex("HomeTeamTeamID");
 
+                    b.HasIndex("RoundID");
+
                     b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("ARSN.Models.Round", b =>
+                {
+                    b.Property<Guid>("RoundID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("RoundID");
+
+                    b.ToTable("Round");
                 });
 
             modelBuilder.Entity("ARSN.Models.Team", b =>
@@ -281,6 +297,10 @@ namespace ARSN.Migrations
                     b.HasOne("ARSN.Models.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamTeamID");
+
+                    b.HasOne("ARSN.Models.Round")
+                        .WithMany("GameCollection")
+                        .HasForeignKey("RoundID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

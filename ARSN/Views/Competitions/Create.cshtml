@@ -32,11 +32,29 @@
                 <input asp-for="CompetitionEnd" class="form-control" />
                 <span asp-validation-for="CompetitionEnd" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" name="button" value="Dodaj timove" class="btn btn-default" />
+                <label class="control-label"></label>
+                <div class="col-md-10">
+                    <select name="HomeTeam" class="form-control" asp-items="ViewBag.HomeTeam">
+                        <option value="">--Select Home Team--</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
-                <input type="button" name="button" value="Ručno dodavanje parova" class="btn btn-default" onclick="addNew()"/>
+                <label class="control-label"></label>
+                <div class="col-md-10">
+                    <select name="AwayTeam" class="form-control" asp-items="ViewBag.AwayTeam">
+                        <option value="">--Select Away Team--</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input id="hidd" type="submit" name="button" value="Dodaj timove" class="btn btn-default" />
+            </div>
+            <div class="form-group">
+                <input type="button" id="show_button" name="button" value="Ručno dodavanje parova" class="btn btn-default" />
             </div>
             <div class="form-group">
                 <input type="submit" name="button" value="Automatsko dodavanje parova" class="btn btn-default" />

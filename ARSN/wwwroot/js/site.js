@@ -1,11 +1,9 @@
 ﻿// Write your JavaScript code.
 
-    function addNew() {
+        var button = document.getElementById('show_button')
+        button.addEventListener('click', hideshow, false);
 
-            var newDropdown = document.createElement('select'),
-            newDropdownOption = document.createElement("option");
-            newDropdownOption = document.createElement("option");
-            newDropdownOption.value = "value1";
-            newDropdownOption.text = "option 1";
-            newDropdown.add(newDropdownOption);
-}
+        function hideshow() {
+            document.getElementById('hidd').style.display = 'none';
+            
+        }   

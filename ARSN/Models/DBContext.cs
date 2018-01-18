@@ -22,6 +22,7 @@ namespace ARSN.Models
         public DbSet<Team> Team{get;set;}
         public DbSet<Competition> Competition { get; set; }
         public DbSet<Game> Game { get; set; }
+        public DbSet<Round> Round { get; set; }
 
         #endregion Properties
 
@@ -43,6 +44,7 @@ namespace ARSN.Models
             modelBuilder.Entity<Competition>().Property(x => x.CompetitionID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Team>().Property(x => x.TeamID).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Round>().Property(x => x.RoundID).ValueGeneratedOnAdd();
         }
         #endregion Methods
     }

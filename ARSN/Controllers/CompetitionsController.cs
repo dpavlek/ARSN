@@ -48,6 +48,9 @@ namespace ARSN.Controllers
         // GET: Competitions/Create
         public async Task<IActionResult> Create()
         {
+            PopulateHomeTeamsDropDownList();
+            PopulateAwayTeamsDropDownList();
+
             var user = await _userManager.GetUserAsync(User);
             if (User.Identity.IsAuthenticated)
             {
@@ -73,19 +76,33 @@ namespace ARSN.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string button, string submit)
         {
+
+            Guid HomeTeamID = new Guid(Request.Form["HomeTeam"]);
+            var homeTeam = await _context.Team
+                 .SingleOrDefaultAsync(m => m.TeamID == HomeTeamID);
+            //game.HomeTeam = homeTeam;
+            System.IO.File.WriteAllText(@"D:\home.txt", homeTeam.Name);
+
+            Guid AwayTeamID = new Guid(Request.Form["AwayTeam"]);
+            var awayTeam = await _context.Team
+                 .SingleOrDefaultAsync(m => m.TeamID == AwayTeamID);
+            //game.AwayTeam = awayTeam;
+            System.IO.File.WriteAllText(@"D:\away.txt", awayTeam.Name);
+
             if (button == "Dodaj timove") return RedirectToAction("Create", "Teams");
             if (button == "Ručno dodavanje parova")
             {
-
+                return RedirectToAction("Create", "Games");
             }
             if (ModelState.IsValid)
-                {
+            {
                     //System.IO.File.WriteAllText(@"D:\request.txt", submit);
                     _context.Add(competition);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                }
-                return View(competition);        
+            }
+
+            return View(competition);        
         }
 
         // GET: Competitions/Edit/5
@@ -181,5 +198,21 @@ namespace ARSN.Controllers
         {
             return _context.Competition.Any(e => e.CompetitionID == id);
         }
+
+        private void PopulateHomeTeamsDropDownList(object selectedHomeTeam = null)
+        {
+            var homeTeamQuery = from d in _context.Team
+                                orderby d.Name
+                                select d;
+            ViewBag.HomeTeam = new SelectList(homeTeamQuery.AsNoTracking(), "TeamID", "Name", selectedHomeTeam);
+        }
+        private void PopulateAwayTeamsDropDownList(object selectedAwayTeam = null)
+        {
+            var awayTeamQuery = from d in _context.Team
+                                orderby d.Name
+                                select d;
+            ViewBag.AwayTeam = new SelectList(awayTeamQuery.AsNoTracking(), "TeamID", "Name", selectedAwayTeam);
+        }
+
     }
 }

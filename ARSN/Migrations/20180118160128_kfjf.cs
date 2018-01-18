@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class pero : Migration
+    public partial class kfjf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,18 @@ namespace ARSN.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Round",
+                columns: table => new
+                {
+                    RoundID = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Round", x => x.RoundID);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,6 +219,7 @@ namespace ARSN.Migrations
                     CompetitionID = table.Column<Guid>(nullable: true),
                     HomeResult = table.Column<string>(nullable: true),
                     HomeTeamTeamID = table.Column<Guid>(nullable: true),
+                    RoundID = table.Column<Guid>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     Winner = table.Column<string>(nullable: true)
                 },
@@ -230,6 +243,12 @@ namespace ARSN.Migrations
                         column: x => x.HomeTeamTeamID,
                         principalTable: "Team",
                         principalColumn: "TeamID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Game_Round_RoundID",
+                        column: x => x.RoundID,
+                        principalTable: "Round",
+                        principalColumn: "RoundID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -291,6 +310,11 @@ namespace ARSN.Migrations
                 name: "IX_Game_HomeTeamTeamID",
                 table: "Game",
                 column: "HomeTeamTeamID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Game_RoundID",
+                table: "Game",
+                column: "RoundID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -321,6 +345,9 @@ namespace ARSN.Migrations
 
             migrationBuilder.DropTable(
                 name: "Competition");
+
+            migrationBuilder.DropTable(
+                name: "Round");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
