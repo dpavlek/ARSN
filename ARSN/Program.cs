@@ -32,16 +32,6 @@ namespace ARSN
             {
                 #region Adding Values Into Database
 
-                Organizer OrganizerObject = new Organizer
-                {
-                    Name = "Ime",
-                    Surname = "Prezime",
-                    Email = "mail@gmail.com",
-                    BirthDate = new DateTime(1991, 03, 25),
-                    Organisation = "Organizacija",
-                    PhoneNumber = "09969854645",
-                    Gender = "M"
-                };
               //  context.Organizer.Add(OrganizerObject);
 
 
