@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="jumbotron">
-        <p class="font-effect-fire-animation text-center" id="vatra">ARSN</p>
+        <p class="font-effect-fire-animation text-center">ARSN</p>
         <p class="text-center" id="podnaslov">Aplikacija za Rezultate Sportskih Natjecanja</p>
     </div>
     <nav class="navbar navbar-inverse">
@@ -40,18 +40,19 @@
                     <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a id="color-me"asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <!-- User authentification, if user not authentificated he should not be able to see this-->
-                    @if (User.Identity.IsAuthenticated)
-                   {
                     <li><a id="color-me" asp-area="" asp-controller="Competitions" asp-action="Index">Competition</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Games" asp-action="Index">Game</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
+                    <!-- User authentification, if user not authentificated he should not be able to see this-->
+                    @if (User.Identity.IsAuthenticated)
+                   {
                     <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Index">Verify Account</a></li>
                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right list-hover-slide">
                     <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><form method="post" asp-action="Logout" asp-controller="Account"><div><p><input type="submit" value="Logout" /></p></div></form></li>
                 </ul> 
             </div>
         </div>
@@ -62,6 +63,7 @@
         
     </div>
     <div class="content"></div>
+    
     <footer>
         <p class="text-center">ARSN &copy; 2018, Fakultet Elektrotehnike Racunarstva i Informacijskih Tehnologija</p>
     </footer>

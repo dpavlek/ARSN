@@ -14,16 +14,6 @@
     padding-bottom: 2rem;
 }
 
-    .jumbotron #vatra {
-        font-family: "Finger Paint";
-        display: block;
-        font-size: 9rem;
-        margin-top: 0.2rem;
-        margin-bottom: 1.5rem;
-        margin-left: 0;
-        margin-right: 0;
-    }
-
     .jumbotron #podnaslov {
         font-family: "Rock Salt";
         font-size: 2rem;

@@ -8,6 +8,4 @@
             newDropdownOption.value = "value1";
             newDropdownOption.text = "option 1";
             newDropdown.add(newDropdownOption);
-
-
-        }
+}

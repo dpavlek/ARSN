@@ -172,5 +172,12 @@ namespace ARSN.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
