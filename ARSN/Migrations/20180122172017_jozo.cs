@@ -55,18 +55,6 @@ namespace ARSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Round",
-                columns: table => new
-                {
-                    RoundID = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Round", x => x.RoundID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Team",
                 columns: table => new
                 {
@@ -210,13 +198,31 @@ namespace ARSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Round",
+                columns: table => new
+                {
+                    RoundID = table.Column<Guid>(nullable: false),
+                    CompetitionID = table.Column<Guid>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Round", x => x.RoundID);
+                    table.ForeignKey(
+                        name: "FK_Round_Competition_CompetitionID",
+                        column: x => x.CompetitionID,
+                        principalTable: "Competition",
+                        principalColumn: "CompetitionID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Game",
                 columns: table => new
                 {
                     GameID = table.Column<Guid>(nullable: false),
                     AwayResult = table.Column<string>(nullable: true),
                     AwayTeamTeamID = table.Column<Guid>(nullable: true),
-                    CompetitionID = table.Column<Guid>(nullable: true),
                     HomeResult = table.Column<string>(nullable: true),
                     HomeTeamTeamID = table.Column<Guid>(nullable: true),
                     RoundID = table.Column<Guid>(nullable: true),
@@ -231,12 +237,6 @@ namespace ARSN.Migrations
                         column: x => x.AwayTeamTeamID,
                         principalTable: "Team",
                         principalColumn: "TeamID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Game_Competition_CompetitionID",
-                        column: x => x.CompetitionID,
-                        principalTable: "Competition",
-                        principalColumn: "CompetitionID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Team_HomeTeamTeamID",
@@ -302,11 +302,6 @@ namespace ARSN.Migrations
                 column: "AwayTeamTeamID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_CompetitionID",
-                table: "Game",
-                column: "CompetitionID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Game_HomeTeamTeamID",
                 table: "Game",
                 column: "HomeTeamTeamID");
@@ -315,6 +310,11 @@ namespace ARSN.Migrations
                 name: "IX_Game_RoundID",
                 table: "Game",
                 column: "RoundID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Round_CompetitionID",
+                table: "Round",
+                column: "CompetitionID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -344,10 +344,10 @@ namespace ARSN.Migrations
                 name: "Team");
 
             migrationBuilder.DropTable(
-                name: "Competition");
+                name: "Round");
 
             migrationBuilder.DropTable(
-                name: "Round");
+                name: "Competition");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

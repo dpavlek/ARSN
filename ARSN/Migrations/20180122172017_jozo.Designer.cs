@@ -11,7 +11,7 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180118180341_jozo")]
+    [Migration("20180122172017_jozo")]
     partial class jozo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,8 +115,6 @@ namespace ARSN.Migrations
 
                     b.Property<Guid?>("AwayTeamTeamID");
 
-                    b.Property<Guid?>("CompetitionID");
-
                     b.Property<string>("HomeResult");
 
                     b.Property<Guid?>("HomeTeamTeamID");
@@ -131,8 +129,6 @@ namespace ARSN.Migrations
 
                     b.HasIndex("AwayTeamTeamID");
 
-                    b.HasIndex("CompetitionID");
-
                     b.HasIndex("HomeTeamTeamID");
 
                     b.HasIndex("RoundID");
@@ -145,9 +141,13 @@ namespace ARSN.Migrations
                     b.Property<Guid>("RoundID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid?>("CompetitionID");
+
                     b.Property<string>("Name");
 
                     b.HasKey("RoundID");
+
+                    b.HasIndex("CompetitionID");
 
                     b.ToTable("Round");
                 });
@@ -291,17 +291,20 @@ namespace ARSN.Migrations
                         .WithMany()
                         .HasForeignKey("AwayTeamTeamID");
 
-                    b.HasOne("ARSN.Models.Competition")
-                        .WithMany("GameCollection")
-                        .HasForeignKey("CompetitionID");
-
                     b.HasOne("ARSN.Models.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamTeamID");
 
-                    b.HasOne("ARSN.Models.Round")
+                    b.HasOne("ARSN.Models.Round", "Round")
                         .WithMany("GameCollection")
                         .HasForeignKey("RoundID");
+                });
+
+            modelBuilder.Entity("ARSN.Models.Round", b =>
+                {
+                    b.HasOne("ARSN.Models.Competition", "Competition")
+                        .WithMany("RoundCollection")
+                        .HasForeignKey("CompetitionID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

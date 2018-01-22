@@ -15,6 +15,7 @@ namespace ARSN.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid RoundID { get; set; }
         public string Name { get; set; }
+        public Competition Competition { get; set; }
         public ICollection<Game> GameCollection { get; set; }
 
         #endregion Properties

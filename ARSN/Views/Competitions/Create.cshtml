@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="control-label"></label>
                     <div class="col-md-10">
-                        <select id ="list_home"  name="HomeTeam" class="form-control" asp-items="ViewBag.HomeTeam">
+                        <select id="list_home" name="HomeTeam" class="form-control" asp-items="ViewBag.HomeTeam">
                             <option value="">--Select Home Team--</option>
                         </select>
                     </div>
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label class="control-label"></label>
                     <div class="col-md-10">
-                        <select id ="list_away" name="AwayTeam" class="form-control" asp-items="ViewBag.AwayTeam">
+                        <select id="list_away" name="AwayTeam" class="form-control" asp-items="ViewBag.AwayTeam">
                             <option value="">--Select Away Team--</option>
                         </select>
                     </div>
@@ -53,8 +53,8 @@
                     <input id="list_it" type="button" name="button" value="Dodaj timove u natjecanje" class="btn btn-default" />
                 </div>
 
-                <div id="container">
-                    <ul id="list"></ul>
+                <div id="message">
+                    <textarea id="messageArea" name="message" class="form-control" readonly></textarea>
                 </div>
 
             </div>

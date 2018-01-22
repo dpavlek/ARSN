@@ -40,11 +40,18 @@ namespace ARSN.Models
 
             base.OnModelCreating(modelBuilder);
 
-
             modelBuilder.Entity<Competition>().Property(x => x.CompetitionID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Team>().Property(x => x.TeamID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Round>().Property(x => x.RoundID).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Round>()
+                .HasOne(p => p.Competition)
+                .WithMany(b => b.RoundCollection);
+
+            modelBuilder.Entity<Game>()
+              .HasOne(p => p.Round)
+              .WithMany(b => b.GameCollection);
         }
         #endregion Methods
     }

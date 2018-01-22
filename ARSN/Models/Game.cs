@@ -18,6 +18,7 @@ namespace ARSN.Models
         public string HomeResult { get; set; }
         public string AwayResult { get; set; }
         public string Winner { get; set; }
+        public Round Round { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
 
