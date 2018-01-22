@@ -4,20 +4,20 @@
 
     <div asp-validation-summary="All"></div>
     <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" />
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control"/>
         <span asp-validation-for="Email"></span>
     </div>
     <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
         <span asp-validation-for="Password"></span>
     </div>
     <div>
-        <label asp-for="RememberMe"></label>
+        <label asp-for="RememberMe" class="control-label"></label>
         <input asp-for="RememberMe" />
         <span asp-validation-for="RememberMe"></span>
     </div>
-    <div><p><input type="submit" value="Log in" /></p><p><a asp-action="Register">Register</a></p></div>
+    <div><p><input  class="btn btn-default" type="submit" value="Log in" /></p><p><a asp-action="Register">Register</a></p></div>
 
 </form>

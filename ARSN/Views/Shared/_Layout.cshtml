@@ -44,7 +44,7 @@
                     <li><a id="color-me" asp-area="" asp-controller="Games" asp-action="Index">Game</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
                     <!-- User authentification, if user not authentificated he should not be able to see this-->
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.Equals("arsnferit@protonmail.com"))
                    {
                     <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Index">Verify Account</a></li>
                    }
@@ -57,7 +57,7 @@
                 }
                 else
                 {
-                    <li><form method="post" asp-action="Logout" asp-controller="Account"><div><p><input type="submit" value="Logout" /></p></div></form></li>
+                    <li><form method="post" asp-action="Logout" asp-controller="Account"><div><p><input type="submit" value="Logout" class="logout-btn"/></p></div></form></li>
                 }
                 </ul> 
             </div>
