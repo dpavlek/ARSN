@@ -10,15 +10,20 @@
 
         var button1 = document.getElementById('list_it')
         button1.addEventListener('click', myFunction, false);
-
-function myFunction(list) {
-    var text = "";
-    var inputs = document.getElementById("list_away");
-    for (var i = 0; i < inputs.length; i++) {
-        text += inputs[i].value;
-    }
-    var li = document.createElement("li");
-    var node = document.createTextNode(text);
-    li.appendChild(node);
-    document.getElementById("list").appendChild(li);
-}
+        //Gets elements from lists and writes them in ul
+        function myFunction(list) {
+            var text = [];
+            var inputs = document.getElementById("list_home");
+            var inputs1 = document.getElementById("list_away");
+            for (var i = 0; i < inputs.options.length; i++) {
+                if (inputs.options[i].selected == true) {
+                    text += inputs[i].value+"-";
+                }
+            }
+            for (var i = 0; i < inputs1.options.length; i++) {
+                if (inputs1.options[i].selected == true) {
+                    text += inputs1[i].value+"\n";
+                }
+            }
+            document.getElementById("messageArea").value += text;
+        }
