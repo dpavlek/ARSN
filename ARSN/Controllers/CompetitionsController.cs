@@ -95,13 +95,20 @@ namespace ARSN.Controllers
 
             if (ModelState.IsValid)
             {
-                string tempTeams = Request.Form["message"];
+                string tempTeams = Request.Form["TeamList"];
                 string[] lines = tempTeams.Split(
-                        new[] { "\r\n", "\r", "\n" },
+                        new[] { "\r\n", "\r", "\n","-" },
                         StringSplitOptions.None
                     );
-                
-                    System.IO.File.WriteAllText(@"D:\request.txt", lines[1]);
+                //var game = await _context.Game
+                   //  .Include(s => s.HomeTeam)
+                    // .Include(d => d.AwayTeam)
+                    // .SingleOrDefaultAsync(m => m.GameID == id);
+                foreach(var team in lines)
+                {
+                    var HomeTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == team);
+                }
+                System.IO.File.AppendAllLines(@"D:\request.txt", lines);
                     _context.Add(competition);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -209,14 +216,14 @@ namespace ARSN.Controllers
             var homeTeamQuery = from d in _context.Team
                                 orderby d.Name
                                 select d;
-            ViewBag.HomeTeam = new SelectList(homeTeamQuery.AsNoTracking(), "TeamID", "Name", selectedHomeTeam);
+            ViewBag.HomeTeam = new SelectList(homeTeamQuery.AsNoTracking(), "Name", "Name", selectedHomeTeam);
         }
         private void PopulateAwayTeamsDropDownList(object selectedAwayTeam = null)
         {
             var awayTeamQuery = from d in _context.Team
                                 orderby d.Name
                                 select d;
-            ViewBag.AwayTeam = new SelectList(awayTeamQuery.AsNoTracking(), "TeamID", "Name", selectedAwayTeam);
+            ViewBag.AwayTeam = new SelectList(awayTeamQuery.AsNoTracking(), "Name", "Name", selectedAwayTeam);
         }
 
     }
