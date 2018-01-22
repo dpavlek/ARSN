@@ -77,39 +77,47 @@ namespace ARSN.Controllers
         public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string button, string submit)
         {
            
-            //Guid HomeTeamID = new Guid(Request.Form["HomeTeam"]);
-            //var homeTeam = await _context.Team
-            //.SingleOrDefaultAsync(m => m.TeamID == HomeTeamID);
-            //game.HomeTeam = homeTeam;
-
-            // Guid AwayTeamID = new Guid(Request.Form["AwayTeam"]);
-            // var awayTeam = await _context.Team
-            // .SingleOrDefaultAsync(m => m.TeamID == AwayTeamID);
-            //game.AwayTeam = awayTeam;
-            //if (button == "Dodaj timove u natjecanje")
-            // {
-            //System.IO.File.WriteAllText(@"E:\home.txt", homeTeam.Name);
-            //System.IO.File.WriteAllText(@"E:\away.txt", awayTeam.Name);
-            // }
-            // if (button == "Dodaj timove") return RedirectToAction("Create", "Teams");
-
             if (ModelState.IsValid)
             {
                 string tempTeams = Request.Form["TeamList"];
                 string[] lines = tempTeams.Split(
                         new[] { "\r\n", "\r", "\n","-" },
                         StringSplitOptions.None
-                    );
-                //var game = await _context.Game
-                   //  .Include(s => s.HomeTeam)
-                    // .Include(d => d.AwayTeam)
-                    // .SingleOrDefaultAsync(m => m.GameID == id);
-                foreach(var team in lines)
+                    );   
+                Team HomeTeam=null, AwayTeam=null;
+                List<Game> ListGames=new List<Game>();    
+                Round FirstRound = new Round
                 {
-                    var HomeTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == team);
+                    Name = "1.kolo"
+                };
+
+               for(int i = 0; i < lines.Length-1; i += 2)
+                {
+                    HomeTeam = await _context.Team.SingleAsync(d => d.Name == lines[i]);
+                    AwayTeam = await _context.Team.SingleAsync(d => d.Name == lines[i+1]);
+                    Game NewGame = new Game
+                    {
+                        HomeTeam = HomeTeam,
+                        AwayTeam = AwayTeam,
+                        Type = competition.SportType
+                    };
+
+                    _context.Game.Add(NewGame);
+                    await _context.SaveChangesAsync();
+                    ListGames.Add(NewGame);
+                    HomeTeam = null;
+                    AwayTeam = null;
                 }
-                System.IO.File.AppendAllLines(@"D:\request.txt", lines);
-                    _context.Add(competition);
+               
+                FirstRound.GameCollection = ListGames ;
+                 _context.Add(FirstRound);
+                await _context.SaveChangesAsync();
+                List<Round> ListRound = new List<Round>
+                {
+                    FirstRound
+                };
+                competition.RoundCollection=ListRound;
+                _context.Add(competition);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
             }
