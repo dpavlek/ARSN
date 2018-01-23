@@ -1,0 +1,14 @@
+{
+  "name": "jquery-bracket",
+  "homepage": "https://github.com/teijo/jquery-bracket",
+  "_release": "release-5",
+  "_resolution": {
+    "type": "tag",
+    "tag": "release-5",
+    "commit": "63e5ef585f6daccc8f00ba5fdb4da06f09fdd96b"
+  },
+  "_source": "https://github.com/teijo/jquery-bracket.git",
+  "_target": "release-5",
+  "_originalSource": "jquery-bracket",
+  "_direct": true
+}

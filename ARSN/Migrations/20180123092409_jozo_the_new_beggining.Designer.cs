@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180123090422_DBVersion454")]
-    partial class DBVersion454
+    [Migration("20180123092409_jozo_the_new_beggining")]
+    partial class jozo_the_new_beggining
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
