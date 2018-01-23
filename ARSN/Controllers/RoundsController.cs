@@ -54,7 +54,7 @@ namespace ARSN.Controllers
                         thisRound.Finished = true;
                         var NameOfOldRound = thisRound.Name;
                         Guid CurrentCompetition = thisRound.Competition.CompetitionID;
-                        System.IO.File.AppendAllText(@"D:\cc.txt", CurrentCompetition.ToString());
+                        System.IO.File.AppendAllText(@"E:\cc.txt", CurrentCompetition.ToString());
 
                         string[] OldRoundLines = NameOfOldRound.Split(
                                 new[] { "."},
@@ -125,7 +125,7 @@ namespace ARSN.Controllers
                         var competition = await _context.Competition.Include(d => d.RoundCollection).SingleOrDefaultAsync(d=>d.CompetitionID == CurrentCompetition);
 
                         competition.RoundCollection.Add(NextRound);
-                         System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
+                         System.IO.File.WriteAllText(@"E:\competition.txt", competition.Name);
                         _context.Competition.Update(competition);
                         await _context.SaveChangesAsync(); 
                     }
@@ -133,7 +133,7 @@ namespace ARSN.Controllers
                 }
                 else
                 {
-                    System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
+                    System.IO.File.AppendAllText(@"E:\locked.txt", "Kolo zavrseno\n");
                 }
             }
           
