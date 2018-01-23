@@ -52,6 +52,10 @@ namespace ARSN.Models
             modelBuilder.Entity<Game>()
               .HasOne(p => p.Round)
               .WithMany(b => b.GameCollection);
+
+            modelBuilder.Entity<Competition>()
+             .HasOne(p => p.ApplicationUser)
+             .WithMany(b => b.Competitions);
         }
         #endregion Methods
     }

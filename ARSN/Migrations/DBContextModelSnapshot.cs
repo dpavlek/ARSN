@@ -281,7 +281,7 @@ namespace ARSN.Migrations
 
             modelBuilder.Entity("ARSN.Models.Competition", b =>
                 {
-                    b.HasOne("ARSN.Models.ApplicationUser")
+                    b.HasOne("ARSN.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Competitions")
                         .HasForeignKey("ApplicationUserId");
                 });

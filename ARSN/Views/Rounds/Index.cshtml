@@ -22,27 +22,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-    @foreach (var game in item.GameCollection)
-    {
-            @Html.DisplayFor(modelItem => game.HomeTeam.Name)
-        <span>-</span>
-            @Html.DisplayFor(modelItem => game.AwayTeam.Name)
-        <br/>
-    }
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @foreach (var game in item.GameCollection)
+                    {
+                        @Html.DisplayFor(modelItem => game.HomeTeam.Name)
+                        <span>-</span>
+                        @Html.DisplayFor(modelItem => game.AwayTeam.Name)
+                        <br />
+                    }
+                </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.RoundID">Edit</a> |
+                    <a asp-action="Index" asp-route-id="@item.RoundID">Generiraj novo kolo</a> |
                     <a asp-action="Details" asp-route-id="@item.RoundID">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.RoundID">Delete</a>
                 </td>
             </tr>
-}
+        }
     </tbody>
 </table>
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+{
+    <div class="alert alert-">
+       <strong>Error!</strong> danger">@ViewData.ModelState["Error"].Errors.First().ErrorMessage
+    </div>
+}

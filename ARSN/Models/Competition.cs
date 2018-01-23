@@ -18,6 +18,7 @@ namespace ARSN.Models
         public string SportType { get; set; }
         public DateTime CompetitionBegin { get; set; }
         public DateTime CompetitionEnd { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public ICollection<Round> RoundCollection { get; set; }
 
         #endregion Properties

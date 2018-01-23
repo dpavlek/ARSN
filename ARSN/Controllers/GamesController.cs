@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -106,12 +107,12 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game.AsNoTracking().SingleOrDefaultAsync(m => m.GameID == id);
+            var game = await _context.Game.Include(d=>d.HomeTeam).Include(d=>d.AwayTeam).AsNoTracking().SingleOrDefaultAsync(m => m.GameID == id);
             if (game == null)
             {
                 return NotFound();
             }
-            PopulateHomeTeamsDropDownList(game.HomeTeam);
+            PopulateHomeTeamsDropDownList(game.HomeTeam);           
             PopulateAwayTeamsDropDownList(game.AwayTeam);
             if (User.Identity.IsAuthenticated && user.Verified)
             {
@@ -139,6 +140,12 @@ namespace ARSN.Controllers
             {
                 try
                 {
+                    Int32.TryParse(game.HomeResult, out int HomeResult);
+                    Int32.TryParse(game.AwayResult, out int AwayResult);
+
+                    if (HomeResult > AwayResult)
+                        game.Winner = "Domaći";
+                    else game.Winner = "Gosti";
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                 }

@@ -1,5 +1,6 @@
 ﻿// Write your JavaScript code.
 
+
         var button = document.getElementById('show_button')
         button.addEventListener('click', hideshow, false);
 
@@ -27,3 +28,11 @@
             }
             document.getElementById("messageArea").value += text;
         }
+
+if (ViewData.ModelState["Error"].Errors.Count > 0) {
+
+    $(document).ready(function () {
+        alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage');
+    });
+
+}

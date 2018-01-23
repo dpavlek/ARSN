@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180123090422_DBVersion454")]
-    partial class DBVersion454
+    [Migration("20180123123655_DBVersion145")]
+    partial class DBVersion145
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -282,7 +282,7 @@ namespace ARSN.Migrations
 
             modelBuilder.Entity("ARSN.Models.Competition", b =>
                 {
-                    b.HasOne("ARSN.Models.ApplicationUser")
+                    b.HasOne("ARSN.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Competitions")
                         .HasForeignKey("ApplicationUserId");
                 });
