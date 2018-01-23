@@ -12,9 +12,12 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameCollection)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -25,11 +28,21 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RoundID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RoundID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RoundID">Delete</a>
+    @foreach (var game in item.GameCollection)
+    {
+            @Html.DisplayFor(modelItem => game.HomeTeam.Name)
+        <span>-</span>
+            @Html.DisplayFor(modelItem => game.AwayTeam.Name)
+        <br/>
+    }
             </td>
-        </tr>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RoundID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.RoundID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RoundID">Delete</a>
+                </td>
+            </tr>
 }
     </tbody>
 </table>
