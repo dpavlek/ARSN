@@ -1,17 +1,26 @@
 ﻿// Write your JavaScript code.
 
 
-        var button = document.getElementById('show_button')
-        button.addEventListener('click', hideshow, false);
+        var buttonManualAdd = document.getElementById('show_button_manual')
+        buttonManualAdd.addEventListener('click', HideshowManual, false);
 
-        function hideshow() {
-            document.getElementById('remove_hidden').classList.remove("hidden");
+        function HideshowManual() {
+            document.getElementById('remove_hidden_manual').classList.remove("hidden");
             
         } 
 
-        var button1 = document.getElementById('list_it')
-        button1.addEventListener('click', myFunction, false);
-        //Gets elements from lists and writes them in ul
+        var buttonAutomaticAdd = document.getElementById('show_button_automatic')
+        buttonManualAdd.addEventListener('click', HideshowAutomatic, false);
+
+        function HideshowAutomatic() {
+            document.getElementById('remove_hidden_automatic').classList.remove("hidden");
+
+        } 
+
+        var ButtonAddToCompetition = document.getElementById('list_it')
+        ButtonAddToCompetition .addEventListener('click', myFunction, false);
+
+        //Gets elements from lists and writes them in text box
         function myFunction(list) {
             var text = [];
             var inputs = document.getElementById("list_home");
@@ -28,6 +37,10 @@
             }
             document.getElementById("messageArea").value += text;
         }
+
+        var ButtonAddToCompetition = document.getElementById('list_it')
+        ButtonAddToCompetition.addEventListener('click', myFunction, false); 
+
 
 
 if (ViewData.ModelState["Error"].Errors.Count > 0) {

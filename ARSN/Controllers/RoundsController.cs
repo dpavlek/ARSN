@@ -25,7 +25,7 @@ namespace ARSN.Controllers
             if (id != null)
             {
                 var thisRound = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
-                             .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).SingleOrDefaultAsync(d => d.RoundID == id);
+                             .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).Include(d=>d.Competition).SingleOrDefaultAsync(d => d.RoundID == id);
                 if (!thisRound.Finished)
                 {
                     bool Flag = false;
@@ -53,6 +53,9 @@ namespace ARSN.Controllers
                     {
                         thisRound.Finished = true;
                         var NameOfOldRound = thisRound.Name;
+                        Guid CurrentCompetition = thisRound.Competition.CompetitionID;
+                        System.IO.File.AppendAllText(@"D:\cc.txt", CurrentCompetition.ToString());
+
                         string[] OldRoundLines = NameOfOldRound.Split(
                                 new[] { "."},
                                 StringSplitOptions.None
@@ -79,7 +82,20 @@ namespace ARSN.Controllers
                             Name = NameOfNewRound,
                             Finished = false
                         };
-                        
+                        if (lines.Length % 2 == 1)
+                        {
+                            HomeTeam = await _context.Team.SingleAsync(d => d.Name == lines[lines.Length - 1]);
+                            Game NewGame = new Game
+                            {
+                                HomeTeam = HomeTeam,
+                                Type = SportType,
+                                Winner = "Domaći"
+                            };
+                            _context.Game.Add(NewGame);
+                            await _context.SaveChangesAsync();
+                            ListGames.Add(NewGame);
+                        }
+
                         for (i = 0; i < lines.Length - 1; i += 2)
                         {
                             HomeTeam = await _context.Team.SingleAsync(d => d.Name == lines[i]);
@@ -97,19 +113,7 @@ namespace ARSN.Controllers
                             HomeTeam = null;
                             AwayTeam = null;
                         }
-                        if (lines.Length % 2 == 1)
-                        {
-                            HomeTeam = await _context.Team.SingleAsync(d => d.Name == lines[lines.Length - 1]);
-                            Game NewGame = new Game
-                            {
-                                HomeTeam = HomeTeam,
-                                Type = SportType,
-                                Winner = "Domaći"
-                            };
-                            _context.Game.Add(NewGame);
-                            await _context.SaveChangesAsync();
-                            ListGames.Add(NewGame);
-                        }
+                       
                         NextRound.GameCollection = ListGames;
                         NextRound.Finished =false;
                         _context.Round.Add(NextRound);
@@ -118,12 +122,12 @@ namespace ARSN.Controllers
                          {
                               NextRound
                          };
-                        //var competition = await _context.Competition.Include(d => d.RoundCollection).SingleOrDefaultAsync(d=>d== thisRound.Competition);
+                        var competition = await _context.Competition.Include(d => d.RoundCollection).SingleOrDefaultAsync(d=>d.CompetitionID == CurrentCompetition);
 
-                        //competition.RoundCollection.Add(NextRound);
-                        // System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
-                        // _context.Competition.Update(competition);
-                        //await _context.SaveChangesAsync(); 
+                        competition.RoundCollection.Add(NextRound);
+                         System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
+                        _context.Competition.Update(competition);
+                        await _context.SaveChangesAsync(); 
                     }
 
                 }

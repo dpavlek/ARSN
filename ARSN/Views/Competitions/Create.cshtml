@@ -32,7 +32,7 @@
                 <input asp-for="CompetitionEnd" class="form-control" />
                 <span asp-validation-for="CompetitionEnd" class="text-danger"></span>
             </div>
-            <div class="hidden" id="remove_hidden">
+            <div class="hidden" id="remove_hidden_manual">
                 <div class="form-group">
                     <label class="control-label"></label>
                     <div class="col-md-10">
@@ -56,20 +56,49 @@
                 <div id="message">
                     <textarea id="messageArea" name="TeamList" class="form-control" readonly></textarea>
                 </div>
-
+                <div class="form-group">
+                    <input type="submit" name="submit" value="Stvori natjecanje ručno" class="btn btn-default" />
+                </div>
             </div>
+
+
+
+
+
+            <div class="hidden" id="remove_hidden_automatic">
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <div class="col-md-10">
+                        <select id="Automatic" name="Automatic" class="form-control" asp-items="ViewBag.HomeTeam">
+                            <option value="">--Select Team--</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input id="list_it" type="button" name="button" value="Dodaj timove u natjecanje" class="btn btn-default" />
+                </div>
+
+                <div id="message">
+                    <textarea id="messageAreaAutomatic" name="TeamList" class="form-control" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="submit" value="Stvori natjecanje automatski" class="btn btn-default" />
+                </div>
+            </div>
+
+
+
             <div class="form-group">
                 <input type="submit" name="button" value="Dodaj timove" class="btn btn-default" />
             </div>
             <div class="form-group">
-                <input type="button" id="show_button" name="button" value="Ručno dodavanje parova" class="btn btn-default" />
+                <input type="button" id="show_button_manual" name="button" value="Ručno dodavanje parova" class="btn btn-default" />
             </div>
             <div class="form-group">
-                <input type="submit" name="button" value="Automatsko dodavanje parova" class="btn btn-default" />
+                <input type="button"id="show_button_automatic" name="button" value="Automatsko dodavanje parova" class="btn btn-default" />
             </div>
-            <div class="form-group">
-                <input type="submit" name="submit" value="Stvori natjecanje" class="btn btn-default" />
-            </div>
+            
         </form>
     </div>
 </div>
