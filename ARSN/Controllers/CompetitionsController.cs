@@ -74,17 +74,28 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string button, string submit)
+        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition)
         {
-           
+            PopulateHomeTeamsDropDownList();
+            PopulateAwayTeamsDropDownList();
+            System.IO.File.AppendAllText(@"D:\button.txt", Request.Form["button"]);
             if (ModelState.IsValid)
             {
                 string tempTeams = Request.Form["TeamList"];
                 string[] lines = tempTeams.Split(
                         new[] { "\r\n", "\r", "\n","-" },
                         StringSplitOptions.None
-                    );   
-                Team HomeTeam=null, AwayTeam=null;
+                    ); 
+                //Randomizing teams
+                for(int i=0;i<lines.Length;i++)
+                    System.IO.File.AppendAllText(@"D:\before.txt", lines[i]);
+                var List = lines.ToList();
+                List.Shuffle();
+                foreach(var temp in List)
+                {
+                    System.IO.File.AppendAllText(@"D:\after.txt", temp);
+                }
+                Team HomeTeam =null, AwayTeam=null;
                 List<Game> ListGames=new List<Game>();
                 Round FirstRound = new Round
                 {
