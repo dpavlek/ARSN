@@ -92,7 +92,7 @@ namespace ARSN.Controllers
                     Finished = false
                 };
 
-               for(int i = 0; i < lines.Length-1; i += 2)
+                for (int i = 0; i < lines.Length-1; i += 2)
                 {
                     HomeTeam = await _context.Team.SingleAsync(d => d.Name == lines[i]);
                     AwayTeam = await _context.Team.SingleAsync(d => d.Name == lines[i+1]);
@@ -118,6 +118,8 @@ namespace ARSN.Controllers
                     FirstRound
                 };
                 competition.RoundCollection=ListRound;
+                //competition.ApplicationUser = _userManager.GetUserAsync(SecurityStampRefreshingPrincipalContext);
+                //System.IO.File.WriteAllText(@"D:\home.txt", competition.ApplicationUser.Gender);
                 _context.Add(competition);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
