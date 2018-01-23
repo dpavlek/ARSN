@@ -85,10 +85,11 @@ namespace ARSN.Controllers
                         StringSplitOptions.None
                     );   
                 Team HomeTeam=null, AwayTeam=null;
-                List<Game> ListGames=new List<Game>();    
+                List<Game> ListGames=new List<Game>();
                 Round FirstRound = new Round
                 {
-                    Name = "1.kolo"
+                    Name = "1.kolo",
+                    Finished = false
                 };
 
                for(int i = 0; i < lines.Length-1; i += 2)

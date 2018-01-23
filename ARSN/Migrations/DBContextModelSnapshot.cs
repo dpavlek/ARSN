@@ -142,6 +142,8 @@ namespace ARSN.Migrations
 
                     b.Property<Guid?>("CompetitionID");
 
+                    b.Property<bool>("Finished");
+
                     b.Property<string>("Name");
 
                     b.HasKey("RoundID");

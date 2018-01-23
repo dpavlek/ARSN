@@ -21,7 +21,8 @@ namespace ARSN.Controllers
         // GET: Rounds
         public async Task<IActionResult> Index()
         {
-            var gameCollection=await _context.Round.Include(d => d.GameCollection).ThenInclude(x=>x.HomeTeam).ToListAsync();
+            var gameCollection=await _context.Round.Include(d => d.GameCollection).ThenInclude(x=>x.HomeTeam)
+                .Include(d=>d.GameCollection).ThenInclude(x=>x.AwayTeam).ToListAsync();
 
             return View(gameCollection);
         }

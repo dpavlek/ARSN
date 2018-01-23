@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180122172017_jozo")]
-    partial class jozo
+    [Migration("20180123090422_DBVersion454")]
+    partial class DBVersion454
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,6 +142,8 @@ namespace ARSN.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid?>("CompetitionID");
+
+                    b.Property<bool>("Finished");
 
                     b.Property<string>("Name");
 

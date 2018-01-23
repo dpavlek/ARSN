@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class jozo : Migration
+    public partial class DBVersion454 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -203,6 +203,7 @@ namespace ARSN.Migrations
                 {
                     RoundID = table.Column<Guid>(nullable: false),
                     CompetitionID = table.Column<Guid>(nullable: true),
+                    Finished = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
