@@ -14,6 +14,7 @@ namespace ARSN.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid RoundID { get; set; }
+        [Display(Name = "Ime")]
         public string Name { get; set; }
         public Competition Competition { get; set; }
         public bool Finished { get; set; }

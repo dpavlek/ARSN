@@ -15,7 +15,9 @@ namespace ARSN.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GameID { get; set; }
         public string Type { get; set; }
+        [Range(typeof(int), "0", "100"), Display(Name = "Rezultat domaćina")]
         public string HomeResult { get; set; }
+        [Range(typeof(int), "0", "100"), Display(Name = "Rezultat u gostima")]
         public string AwayResult { get; set; }
         public string Winner { get; set; }
         public Round Round { get; set; }

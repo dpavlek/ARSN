@@ -5,11 +5,11 @@ namespace ARSN.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required, EmailAddress, MaxLength(256), Display(Name = "Email Address")]
+        [Required, EmailAddress, MaxLength(256), Display(Name = "Email")]
         public string Email { get; set; }
-        [Required, MinLength(6),MaxLength(50),DataType(DataType.Password), Display(Name = "Password")]
+        [Required, MinLength(6),MaxLength(50),DataType(DataType.Password), Display(Name = "Lozinka")]
         public string Password { get; set; }
-        [Required, MinLength(6), MaxLength(50), DataType(DataType.Password), Display(Name = "Confirm Password")]
+        [Required, MinLength(6), MaxLength(50), DataType(DataType.Password), Display(Name = "Potvrdi lozinku")]
         [Compare("Password",ErrorMessage = "Lozinke se ne podudaraju.")]
         public string ConfirmPassword { get; set; }
         [Display(Name = "Ime")]
