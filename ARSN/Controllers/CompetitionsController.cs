@@ -74,27 +74,45 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition)
+        public async Task<IActionResult> Create([Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition, string submit)
         {
             PopulateHomeTeamsDropDownList();
             PopulateAwayTeamsDropDownList();
-            System.IO.File.AppendAllText(@"E:\button.txt", Request.Form["button"]);
+            
             if (ModelState.IsValid)
             {
-                string tempTeams = Request.Form["TeamList"];
-                string[] lines = tempTeams.Split(
-                        new[] { "\r\n", "\r", "\n","-" },
-                        StringSplitOptions.None
-                    ); 
-                //Randomizing teams
-                for(int i=0;i<lines.Length;i++)
-                    System.IO.File.AppendAllText(@"E:\before.txt", lines[i]);
-                var List = lines.ToList();
-                List.Shuffle();
-                foreach(var temp in List)
+                System.IO.File.WriteAllText(@"D:\button.txt", submit);
+                string[] lines;
+                if (submit== "Generiraj parove i stvori natjecanje")
                 {
-                    System.IO.File.AppendAllText(@"E:\after.txt", temp);
+                    string tempTeams = Request.Form["TeamList2"];
+                    string[] TempLines = tempTeams.Split(
+                            new[] { "\r\n", "\r", "\n", "-" },
+                            StringSplitOptions.None
+                        );
+                    //Randomizing teams
+                     for (int i = 0; i < TempLines.Length; i++)
+                            System.IO.File.AppendAllText(@"D:\before.txt", TempLines[i]);
+                       var List = TempLines.ToList();
+                    List.Shuffle();
+                    foreach (var temp in List)
+                       {
+                        System.IO.File.AppendAllText(@"D:\after.txt", temp);
+                      }
+                     lines = List.ToArray();
+                    //lines = TempLines;
                 }
+                else
+                {
+                    string tempTeams = Request.Form["TeamList"];
+                     lines = tempTeams.Split(
+                            new[] { "\r\n", "\r", "\n", "-" },
+                            StringSplitOptions.None
+                        );
+                }
+
+                for (int i = 0; i < lines.Length; i++)
+                    System.IO.File.AppendAllText(@"D:\afterrrrr.txt", lines[i]);
                 Team HomeTeam =null, AwayTeam=null;
                 List<Game> ListGames=new List<Game>();
                 Round FirstRound = new Round
@@ -102,11 +120,29 @@ namespace ARSN.Controllers
                     Name = "1.kolo",
                     Finished = false
                 };
-
-                for (int i = 0; i < lines.Length-1; i += 2)
+                System.IO.File.AppendAllText(@"D:\size.txt", lines.Length.ToString());
+                if (lines.Length % 2 == 0)
                 {
-                    HomeTeam = await _context.Team.SingleAsync(d => d.Name == lines[i]);
-                    AwayTeam = await _context.Team.SingleAsync(d => d.Name == lines[i+1]);
+                    HomeTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == lines[lines.Length-2]);
+                    Game NewGame = new Game
+                    {
+                        HomeTeam = HomeTeam,
+                        Winner="Domaći",
+                        Type = competition.SportType
+                    };
+
+                    _context.Game.Add(NewGame);
+                    await _context.SaveChangesAsync();
+                    ListGames.Add(NewGame);
+                }
+
+                HomeTeam = null;
+                for (int i = 0; i < lines.Length-2; i += 2)
+                {
+                    HomeTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == lines[i]);
+                    AwayTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == lines[i+1]);
+                    System.IO.File.AppendAllText(@"D:\for.txt", HomeTeam.Name);
+                    System.IO.File.AppendAllText(@"D:\for.txt", AwayTeam.Name);
                     Game NewGame = new Game
                     {
                         HomeTeam = HomeTeam,

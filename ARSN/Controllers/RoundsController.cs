@@ -47,14 +47,14 @@ namespace ARSN.Controllers
                     if (Flag == true)
                     {
                         ModelState.AddModelError("Error", "Nisu unešeni svi rezultati!");
-                        System.IO.File.AppendAllText(@"E:\error.txt", "Error nisu unesene sve igre!\n");
+                        System.IO.File.AppendAllText(@"D:\error.txt", "Error nisu unesene sve igre!\n");
                     }
                     else
                     {
                         thisRound.Finished = true;
                         var NameOfOldRound = thisRound.Name;
                         Guid CurrentCompetition = thisRound.Competition.CompetitionID;
-                        System.IO.File.AppendAllText(@"E:\cc.txt", CurrentCompetition.ToString());
+                        System.IO.File.AppendAllText(@"D:\cc.txt", CurrentCompetition.ToString());
 
                         string[] OldRoundLines = NameOfOldRound.Split(
                                 new[] { "."},
@@ -65,7 +65,7 @@ namespace ARSN.Controllers
                         string NameOfNewRound = NumOfNewRound.ToString() + ".kolo";
                         if (ListOfWinners.LongCount() == 1)
                         {
-                            System.IO.File.AppendAllText(@"E:\winner.txt", ListOfWinners.ToArray().GetValue(0).ToString()+"\n");
+                            System.IO.File.AppendAllText(@"D:\winner.txt", ListOfWinners.ToArray().GetValue(0).ToString()+"\n");
                             var LastCollection = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
                              .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).ToListAsync();
                             return View(LastCollection);
@@ -125,7 +125,7 @@ namespace ARSN.Controllers
                         var competition = await _context.Competition.Include(d => d.RoundCollection).SingleOrDefaultAsync(d=>d.CompetitionID == CurrentCompetition);
 
                         competition.RoundCollection.Add(NextRound);
-                         System.IO.File.WriteAllText(@"E:\competition.txt", competition.Name);
+                         System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
                         _context.Competition.Update(competition);
                         await _context.SaveChangesAsync(); 
                     }
@@ -133,7 +133,7 @@ namespace ARSN.Controllers
                 }
                 else
                 {
-                    System.IO.File.AppendAllText(@"E:\locked.txt", "Kolo zavrseno\n");
+                    System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
                 }
             }
           
@@ -149,7 +149,7 @@ namespace ARSN.Controllers
             {
                 return NotFound();
             }
-
+            
             var round = await _context.Round
                 .SingleOrDefaultAsync(m => m.RoundID == id);
             if (round == null)
