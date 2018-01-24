@@ -38,11 +38,8 @@
             <div class="navbar-collapse collapse" id="myNavbar">
                 <ul class="nav navbar-nav list-hover-slide">
                     <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a id="color-me" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Competitions" asp-action="Index">Competition</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Rounds" asp-action="Index">Rounds</a></li>
-                    <li><a id="color-me" asp-area="" asp-controller="Games" asp-action="Index">Game</a></li>
                     <li><a id="color-me" asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
                     <!-- User authentification, if user not authentificated he should not be able to see this-->
                     @if (User.Identity.Equals("arsnferit@protonmail.com"))

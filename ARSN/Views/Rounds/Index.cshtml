@@ -18,34 +18,53 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GameCollection)
+                Igre
             </th>
+            <th>
+                Rezultat
+            </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @foreach (var game in item.GameCollection)
-                    {
-                        @Html.DisplayFor(modelItem => game.HomeTeam.Name)
-                        <span>-</span>
-                        @Html.DisplayFor(modelItem => game.AwayTeam.Name)
-                        <br />
-                    }
-                </td>
-
-                <td>
-                    <a asp-action="Index" asp-route-id="@item.RoundID">Generiraj novo kolo</a> |
-                    <a asp-action="Details" asp-route-id="@item.RoundID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.RoundID">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @foreach (var game in item.GameCollection)
+        {
+            @Html.DisplayFor(modelItem => game.HomeTeam.Name)
+            <span>-</span>
+            @Html.DisplayFor(modelItem => game.AwayTeam.Name)
+            <br />
+}
+            </td>
+            <td>
+                @foreach (var game in item.GameCollection)
+        {
+            @Html.DisplayFor(modelItem => game.HomeResult)
+            <span>-</span>
+            @Html.DisplayFor(modelItem => game.AwayResult)
+            <br />
+}
+            </td>
+            <td>
+                @foreach (var game in item.GameCollection)
+    {
+            <a asp-controller="Games" asp-action="Edit" asp-route-id="@game.GameID">Edit</a> <span>|</span>
+            <a asp-controller="Games" asp-action="Details" asp-route-id="@game.GameID"> Details </a> <span>|</span>
+            <a asp-controller="Games" asp-action="Delete" asp-route-id="@game.GameID"> Delete </a>
+            <br />
+}
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

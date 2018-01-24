@@ -160,7 +160,7 @@ namespace ARSN.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Rounds");
             }
             PopulateHomeTeamsDropDownList(game.HomeTeam);
             PopulateAwayTeamsDropDownList(game.AwayTeam);

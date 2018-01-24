@@ -21,7 +21,6 @@ namespace ARSN.Controllers
         // GET: Rounds
         public async Task<IActionResult> Index(Guid? id)
         {
-
             if (id != null)
             {
                 var thisRound = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
@@ -127,19 +126,18 @@ namespace ARSN.Controllers
                         competition.RoundCollection.Add(NextRound);
                          System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
                         _context.Competition.Update(competition);
-                        await _context.SaveChangesAsync(); 
+                        await _context.SaveChangesAsync();
                     }
-
                 }
                 else
                 {
                     System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
                 }
             }
-          
             var gameCollection = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
-                             .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).ToListAsync();
+                          .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).ToListAsync();
             return View(gameCollection);
+            
         }
 
         // GET: Rounds/Details/5
