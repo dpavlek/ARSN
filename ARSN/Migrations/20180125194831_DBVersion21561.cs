@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class jozoTheGreat : Migration
+    public partial class DBVersion21561 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,10 +59,10 @@ namespace ARSN.Migrations
                 columns: table => new
                 {
                     TeamID = table.Column<Guid>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Organisation = table.Column<string>(nullable: true),
-                    TrainerName = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Organisation = table.Column<string>(maxLength: 30, nullable: false),
+                    TrainerName = table.Column<string>(maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -183,8 +183,8 @@ namespace ARSN.Migrations
                     ApplicationUserId = table.Column<string>(nullable: true),
                     CompetitionBegin = table.Column<DateTime>(nullable: false),
                     CompetitionEnd = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    SportType = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    SportType = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {

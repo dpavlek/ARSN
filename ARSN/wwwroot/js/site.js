@@ -59,6 +59,7 @@
                 }
             }
             document.getElementById("messageAreaAutomatic").value += text;
+           // alert("alert");
             
         }
 

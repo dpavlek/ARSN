@@ -8,9 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="~/lib/jquery-bracket/jquery.bracket.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -62,7 +60,7 @@
 }
             </td>
             <td>
-                <a asp-action="Index" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
+                <a asp-controller="Rounds" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
             </td>
         </tr>
         }

@@ -165,8 +165,8 @@ namespace ARSN.Controllers
                     FirstRound
                 };
                 competition.RoundCollection=ListRound;
-                //competition.ApplicationUser = _userManager.GetUserAsync(SecurityStampRefreshingPrincipalContext);
-                //System.IO.File.WriteAllText(@"D:\home.txt", competition.ApplicationUser.Gender);
+                competition.ApplicationUser =await  _userManager.GetUserAsync(User);
+                System.IO.File.WriteAllText(@"D:\home.txt", competition.ApplicationUser.Email);
                 _context.Add(competition);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

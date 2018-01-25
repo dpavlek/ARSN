@@ -47,15 +47,18 @@ namespace ARSN.Models
 
             modelBuilder.Entity<Round>()
                 .HasOne(p => p.Competition)
-                .WithMany(b => b.RoundCollection);
+                .WithMany(b => b.RoundCollection)
+                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
 
             modelBuilder.Entity<Game>()
               .HasOne(p => p.Round)
-              .WithMany(b => b.GameCollection);
+              .WithMany(b => b.GameCollection)
+              .Metadata.DeleteBehavior=DeleteBehavior.Restrict;
 
             modelBuilder.Entity<Competition>()
              .HasOne(p => p.ApplicationUser)
-             .WithMany(b => b.Competitions);
+             .WithMany(b => b.Competitions)
+             .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
         }
         #endregion Methods
     }

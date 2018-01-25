@@ -94,9 +94,13 @@ namespace ARSN.Migrations
 
                     b.Property<DateTime>("CompetitionEnd");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
-                    b.Property<string>("SportType");
+                    b.Property<string>("SportType")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.HasKey("CompetitionID");
 
@@ -158,13 +162,19 @@ namespace ARSN.Migrations
                     b.Property<Guid>("TeamID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
-                    b.Property<string>("Organisation");
+                    b.Property<string>("Organisation")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
-                    b.Property<string>("TrainerName");
+                    b.Property<string>("TrainerName")
+                        .HasMaxLength(30);
 
                     b.HasKey("TeamID");
 
@@ -283,7 +293,8 @@ namespace ARSN.Migrations
                 {
                     b.HasOne("ARSN.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Competitions")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("ARSN.Models.Game", b =>
@@ -298,14 +309,16 @@ namespace ARSN.Migrations
 
                     b.HasOne("ARSN.Models.Round", "Round")
                         .WithMany("GameCollection")
-                        .HasForeignKey("RoundID");
+                        .HasForeignKey("RoundID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("ARSN.Models.Round", b =>
                 {
                     b.HasOne("ARSN.Models.Competition", "Competition")
                         .WithMany("RoundCollection")
-                        .HasForeignKey("CompetitionID");
+                        .HasForeignKey("CompetitionID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
