@@ -58,17 +58,5 @@
                     text += inputs[i].value + "\n";
                 }
             }
-            document.getElementById("messageAreaAutomatic").value += text;
-           // alert("alert");
-            
+            document.getElementById("messageAreaAutomatic").value += text;            
         }
-
-  
-
-if (ViewData.ModelState["Error"].Errors.Count > 0) {
-
-    $(document).ready(function () {
-        alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage');
-    });
-
-}
