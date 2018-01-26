@@ -114,6 +114,19 @@
         }
 
 
+function CheckResult() {
+    var HomeResult = document.getElementById("HomeResult").value;
+    var AwayResult = document.getElementById("AwayResult").value;
+    var error = document.getElementById("errorMessage");
+    if (HomeResult == AwayResult) {
+        error.innerHTML = "Unesite razlicite rezultate!";
+        return false;
+    }
+    else {
+        error.innerHTML = "";
+        return true
+    }
+}
   
 
 if (ViewData.ModelState["Error"].Errors.Count > 0) {
