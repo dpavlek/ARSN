@@ -141,9 +141,9 @@ namespace ARSN.Controllers
                     Int32.TryParse(game.HomeResult, out int HomeResult);
                     Int32.TryParse(game.AwayResult, out int AwayResult);
 
-                    if (HomeResult > AwayResult)
-                        game.Winner = "Domaći";
-                    else game.Winner = "Gosti";
+                    if (HomeResult < AwayResult)
+                        game.Winner = "Gosti";
+                    else game.Winner = "Domaći";
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                 }
