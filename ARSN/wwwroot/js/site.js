@@ -60,3 +60,26 @@
             }
             document.getElementById("messageAreaAutomatic").value += text;            
         }
+
+        //Checks wheather user selected any team for the championship
+        function CheckCreateValidationAutomatic() {
+            var sportType = document.getElementById("SportType").value;
+            var textVal = document.getElementById("messageAreaAutomatic").value;
+            if (textVal == "" || sportType == "") {
+                return false;
+            }
+            else {
+                return true
+            }
+        }
+
+        function CheckCreateValidationManual() {
+            var sportType = document.getElementById("SportType").value;
+            var textVal = document.getElementById("messageAreaManual").value;
+            if (textVal == "" || sportType == "") {
+                return false;
+            }
+            else {
+                return true
+            }
+        }
