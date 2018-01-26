@@ -148,7 +148,15 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            return View(team);
+            var user = await _userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View(team);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Teams/Delete/5

@@ -24,7 +24,23 @@ namespace ARSN.Controllers
         // GET: Competitions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Competition.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+            return View(await _context.Competition.Where(d=>d.ApplicationUser.Id==user.Id).ToListAsync());
+        }
+
+        public async Task<IActionResult> Football()
+        {
+            return View(await _context.Competition.Where(d=>d.SportType=="Nogomet").ToListAsync());
+        }
+
+        public async Task<IActionResult> Basketball()
+        {
+            return View(await _context.Competition.Where(d => d.SportType == "Košarka").ToListAsync());
+        }
+
+        public async Task<IActionResult> Handball()
+        {
+            return View(await _context.Competition.Where(d => d.SportType == "Rukomet").ToListAsync());
         }
 
         // GET: Competitions/Details/5
@@ -179,7 +195,6 @@ namespace ARSN.Controllers
         public async Task<IActionResult> Edit(Guid? id)
         {
             var user = await _userManager.GetUserAsync(User);
-
             if (id == null)
             {
                 return NotFound();

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ARSN.Models.Competition>
+
+@{
+    ViewData["Title"] = "Football";
+}
+
+<h2>Nogomet</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompetitionBegin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompetitionEnd)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompetitionBegin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompetitionEnd)
+                </td>
+                <td>
+                    <a asp-controller="Rounds" asp-action="Index" asp-route-id="@item.CompetitionID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

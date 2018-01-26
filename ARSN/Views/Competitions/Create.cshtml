@@ -18,9 +18,17 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SportType" class="control-label"></label>
-                <input asp-for="SportType" class="form-control" />
-                <span asp-validation-for="SportType" class="text-danger"></span>
+                <div class="form-group">
+                    <label class="control-label">Odabir sporta</label>
+                    <div class="col-md-10">
+                        <select id="SportType" name="SportType" class="form-control">
+                            <option value="">--Odaberite sport--</option>
+                            <option value="Nogomet">Nogomet</option>
+                            <option value="Košarka">Košarka</option>
+                            <option value="Rukomet">Rukomet</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="CompetitionBegin" class="control-label"></label>
@@ -102,6 +110,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-
-}

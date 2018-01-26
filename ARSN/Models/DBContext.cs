@@ -44,21 +44,10 @@ namespace ARSN.Models
             modelBuilder.Entity<Game>().Property(x => x.GameID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Team>().Property(x => x.TeamID).ValueGeneratedOnAdd();
             modelBuilder.Entity<Round>().Property(x => x.RoundID).ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Round>()
-                .HasOne(p => p.Competition)
-                .WithMany(b => b.RoundCollection)
-                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
-
-            modelBuilder.Entity<Game>()
-              .HasOne(p => p.Round)
-              .WithMany(b => b.GameCollection)
-              .Metadata.DeleteBehavior=DeleteBehavior.Restrict;
-
-            modelBuilder.Entity<Competition>()
-             .HasOne(p => p.ApplicationUser)
-             .WithMany(b => b.Competitions)
-             .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
         #endregion Methods
     }

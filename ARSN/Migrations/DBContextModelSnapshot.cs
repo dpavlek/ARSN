@@ -301,11 +301,13 @@ namespace ARSN.Migrations
                 {
                     b.HasOne("ARSN.Models.Team", "AwayTeam")
                         .WithMany()
-                        .HasForeignKey("AwayTeamTeamID");
+                        .HasForeignKey("AwayTeamTeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ARSN.Models.Team", "HomeTeam")
                         .WithMany()
-                        .HasForeignKey("HomeTeamTeamID");
+                        .HasForeignKey("HomeTeamTeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ARSN.Models.Round", "Round")
                         .WithMany("GameCollection")
@@ -326,7 +328,7 @@ namespace ARSN.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -334,7 +336,7 @@ namespace ARSN.Migrations
                     b.HasOne("ARSN.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -342,7 +344,7 @@ namespace ARSN.Migrations
                     b.HasOne("ARSN.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -350,12 +352,12 @@ namespace ARSN.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ARSN.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -363,7 +365,7 @@ namespace ARSN.Migrations
                     b.HasOne("ARSN.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

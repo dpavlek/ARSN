@@ -112,8 +112,6 @@ namespace ARSN.Controllers
             {
                 return NotFound();
             }
-            PopulateHomeTeamsDropDownList(game.HomeTeam);           
-            PopulateAwayTeamsDropDownList(game.AwayTeam);
             if (User.Identity.IsAuthenticated && user.Verified)
             {
                 return View(game);
@@ -162,8 +160,7 @@ namespace ARSN.Controllers
                 }
                 return RedirectToAction("Index", "Rounds");
             }
-            PopulateHomeTeamsDropDownList(game.HomeTeam);
-            PopulateAwayTeamsDropDownList(game.AwayTeam);
+
             return View(game);
         }
 

@@ -30,21 +30,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="HomeTeam" class="control-label"></label>
-                <div class="col-md-10">
-                    <select asp-for="HomeTeam" class="form-control" asp-items="ViewBag.HomeTeam">
-                        <option value="">--Select Home Team--</option>
-                    </select>
-                    <span asp-validation-for="HomeTeam" class="text-danger" />
-                </div>
+                <input asp-for="HomeTeam" value="@Model.HomeTeam.Name" class="form-control" disabled />
+                <span asp-validation-for="HomeTeam" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AwayTeam" class="control-label"></label>
-                <div class="col-md-10">
-                    <select asp-for="AwayTeam" class="form-control" asp-items="ViewBag.AwayTeam">
-                        <option value="">--Select Away Team--</option>
-                    </select>
-                    <span asp-validation-for="AwayTeam" class="text-danger" />
-                </div>
+                <input asp-for="AwayTeam" value="@Model.AwayTeam.Name" class="form-control" disabled />
+                <span asp-validation-for="AwayTeam" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
