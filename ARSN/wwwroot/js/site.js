@@ -26,7 +26,8 @@
 
         //Gets elements from lists and writes them in text box for manual additions
         function AddToTextAreaForManual(list) {
-            if (document.getElementById("list_home").value == "" || document.getElementById("list_away").value == "") {
+            if (document.getElementById("list_home").value == "" || document.getElementById("list_away").value == ""
+                || document.getElementById("list_home").value == document.getElementById("list_away").value) {
                 return false;
             }
             else {
@@ -36,13 +37,18 @@
                 for (var i = 0; i < inputs.options.length; i++) {
                     if (inputs.options[i].selected == true) {
                         text += inputs[i].value + "-";
+                        inputs.remove(i);
+                        inputs1.remove(i);
                     }
                 }
                 for (var i = 0; i < inputs1.options.length; i++) {
                     if (inputs1.options[i].selected == true) {
                         text += inputs1[i].value + "\n";
+                        inputs.remove(i);
+                        inputs1.remove(i);
                     }
                 }
+
                 document.getElementById("messageAreaManual").value += text;
             }
         }
