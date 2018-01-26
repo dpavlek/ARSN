@@ -49,7 +49,7 @@
                     <li><a id="color-me" asp-area="" asp-controller="Teams" asp-action="Index">Timovi</a></li>
 
                     <!-- User authentification, if user not authentificated he should not be able to see this-->
-                    @if (User.Identity.Equals("3ddfca09-5d7a-4794-9db0-ce2d2b6c17cf"))
+                    @if (User.Identity.IsAuthenticated && User.Identity.Name.Equals("arsnferit@protonmail.com"))
     {
                 <li><a id="color-me" asp-area="" asp-controller="Account" asp-action="Index">Verify Account</a></li>
 }
