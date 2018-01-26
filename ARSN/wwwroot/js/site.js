@@ -67,10 +67,13 @@
         function CheckCreateValidationAutomatic() {
             var sportType = document.getElementById("SportType").value;
             var textVal = document.getElementById("messageAreaAutomatic").value;
+            var error = document.getElementById("errorMessage");
             if (textVal == "" || sportType == "") {
+                error.innerHTML = "Nisu dodani timovi ili nije odabran sport";
                 return false;
             }
             else {
+                error.innerHTML = "";
                 return true
             }
         }
@@ -78,13 +81,18 @@
         function CheckCreateValidationManual() {
             var sportType = document.getElementById("SportType").value;
             var textVal = document.getElementById("messageAreaManual").value;
+            var error = document.getElementById("errorMessage");
             if (textVal == "" || sportType == "") {
+                error.innerHTML = "Nisu dodani timovi ili nije odabran sport";
                 return false;
             }
             else {
+                error.innerHTML = "";
                 return true
             }
         }
+
+        
 
 
 
