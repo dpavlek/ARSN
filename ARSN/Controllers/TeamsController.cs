@@ -167,11 +167,11 @@ namespace ARSN.Controllers
         {
             var homeTeam = await _context.Game
                 .Include(d => d.HomeTeam)
-                .SingleOrDefaultAsync(d => d.HomeTeam.TeamID == id);
+                .AnyAsync(d => d.HomeTeam.TeamID == id);
             var awayTeam = await _context.Game
                     .Include(d => d.AwayTeam)
-                    .SingleOrDefaultAsync(d => d.AwayTeam.TeamID == id);
-            if (homeTeam==null && awayTeam==null)
+                    .AnyAsync(d => d.AwayTeam.TeamID == id);
+            if (homeTeam==false && awayTeam==false)
             {
                 var team = await _context.Team
                     .SingleOrDefaultAsync(m => m.TeamID == id);

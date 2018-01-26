@@ -113,9 +113,6 @@
             }
         }
 
-
-  
-
 if (ViewData.ModelState["Error"].Errors.Count > 0) {
 
     $(document).ready(function () {

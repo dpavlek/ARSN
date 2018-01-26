@@ -16,31 +16,7 @@ namespace ARSN
     {
         public static void Main(string[] args)
         {
-            //TO DO: check if DB works
-            //var context = new DBContext();
-            /* var t = new Team();
-             t.Name = "Pero";
-             t.TeamID = "111";
-             using (var context1 = new DBContext())
-             {
-                 context1.Database.OpenConnection();
-               context1.Team.Add(t);
-
-               context1.SaveChanges();
-             }*/
-           /* using (var context = new DBContext())
-            {
-                #region Adding Values Into Database
-
-              //  context.Organizer.Add(OrganizerObject);
-
-
-               // context.SaveChanges();
-
-                #endregion Adding Values Into Database
-            }*/
-            BuildWebHost(args).Run();
-            
+            BuildWebHost(args).Run();       
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
