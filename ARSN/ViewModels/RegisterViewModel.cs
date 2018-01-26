@@ -17,6 +17,7 @@ namespace ARSN.ViewModels
         [Display(Name = "Prezime")]
         public string Surname { get; set; }
         [DataType(DataType.Date), Display(Name ="Datum Rođenja")]
+        [Range(typeof(DateTime), "1/1/1900", "1/1/2018", ErrorMessage = "Datum je izvan granica")]
         public DateTime BirthDate { get; set; }
         [Required, Display(Name ="Organizacija")]
         public string Organisation { get; set; }

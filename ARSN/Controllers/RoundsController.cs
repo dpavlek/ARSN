@@ -68,7 +68,7 @@ namespace ARSN.Controllers
                             if (ListOfWinners.LongCount() == 1)
                             {
                                 var CompetID = new Guid(HttpContext.Session.GetString(CompetitionKey));
-                                System.IO.File.AppendAllText(@"D:\winner.txt", ListOfWinners.ToArray().GetValue(0).ToString() + "\n");
+                               // System.IO.File.AppendAllText(@"D:\winner.txt", ListOfWinners.ToArray().GetValue(0).ToString() + "\n");
                                 var LastCollection = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
                                  .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
                                  .Where(d=>d.Competition.CompetitionID==CompetID)
@@ -133,7 +133,7 @@ namespace ARSN.Controllers
 
                             competition.RoundCollection.Add(NextRound);
                             foreach(var round in competition.RoundCollection)
-                            System.IO.File.AppendAllText(@"D:\competitionRounds.txt", round.Name);
+                           // System.IO.File.AppendAllText(@"D:\competitionRounds.txt", round.Name);
                             _context.Competition.Update(competition);
                             await _context.SaveChangesAsync();
                         }
@@ -141,7 +141,6 @@ namespace ARSN.Controllers
                     else
                     {
                         // System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
-                        System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
                         ModelState.AddModelError("Error", "Kolo je zavrseno !");
 
                     }
@@ -157,7 +156,7 @@ namespace ARSN.Controllers
                           .Where(d => d.Competition.CompetitionID == competition.CompetitionID)
                           .ToListAsync();
                         HttpContext.Session.SetString(CompetitionKey, id.ToString());
-                        System.IO.File.AppendAllText(@"D:\Postavljanje.txt", HttpContext.Session.GetString(CompetitionKey));
+                       // System.IO.File.AppendAllText(@"D:\Postavljanje.txt", HttpContext.Session.GetString(CompetitionKey));
 
                         return View(Rounds);
                     }
@@ -166,7 +165,7 @@ namespace ARSN.Controllers
             }
             //TODO izlistati sva kola iz natjecanja pomocu sessiona
             var CompID = new Guid(HttpContext.Session.GetString(CompetitionKey));
-            System.IO.File.AppendAllText(@"D:\Ponovo.txt", CompID.ToString());
+           // System.IO.File.AppendAllText(@"D:\Ponovo.txt", CompID.ToString());
 
             var gameCollection = await _context.Round
                 .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)

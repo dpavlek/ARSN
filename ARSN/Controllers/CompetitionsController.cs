@@ -276,11 +276,11 @@ namespace ARSN.Controllers
             var competition = await _context.Competition
                 .Include(d=>d.RoundCollection)
                 .SingleOrDefaultAsync(m => m.CompetitionID == id);
-          System.IO.File.WriteAllText(@"D:\comp.txt", competition.RoundCollection.ToString());
+         // System.IO.File.WriteAllText(@"D:\comp.txt", competition.RoundCollection.ToString());
 
             foreach (var round in competition.RoundCollection)
             {
-                System.IO.File.WriteAllText(@"D:\round.txt", round.Name);
+                //System.IO.File.WriteAllText(@"D:\round.txt", round.Name);
 
                 var Round = await _context.Round
                     .Include(d => d.GameCollection)
