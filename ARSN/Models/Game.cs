@@ -23,7 +23,13 @@ namespace ARSN.Models
         public Round Round { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
-
+        public bool Empty
+        {
+            get
+            {
+                return (AwayTeam==null);
+            }
+        }
         #endregion Properties
 
     }

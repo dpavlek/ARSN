@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ARSN.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace ARSN
 {
@@ -26,13 +27,19 @@ namespace ARSN
         {
             services.AddDbContext<DBContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0"));
             services.AddMvc();
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options => 
+            {
+                
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DBContext>()
-                .AddDefaultTokenProviders();
-
-            
-            
+                .AddDefaultTokenProviders();    
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +54,7 @@ namespace ARSN
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseAuthentication();

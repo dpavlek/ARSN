@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ARSN.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ARSN.Controllers
 {
     public class RoundsController : Controller
     {
         private readonly DBContext _context;
-
+        const string CompetitionKey = "_CompetitionID";
         public RoundsController(DBContext context)
         {
             _context = context;
@@ -66,9 +67,12 @@ namespace ARSN.Controllers
                             string NameOfNewRound = NumOfNewRound.ToString() + ".kolo";
                             if (ListOfWinners.LongCount() == 1)
                             {
+                                var CompetID = new Guid(HttpContext.Session.GetString(CompetitionKey));
                                 System.IO.File.AppendAllText(@"D:\winner.txt", ListOfWinners.ToArray().GetValue(0).ToString() + "\n");
                                 var LastCollection = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
-                                 .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).ToListAsync();
+                                 .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
+                                 .Where(d=>d.Competition.CompetitionID==CompetID)
+                                 .ToListAsync();
                                 return View(LastCollection);
                             }
                             string[] lines = ListOfWinners.ToArray();
@@ -138,22 +142,32 @@ namespace ARSN.Controllers
                 }
                 else
                 {
-                    var competition = await _context.Competition.SingleOrDefaultAsync(d => d.CompetitionID== id);
+                    var competition = await _context.Competition.SingleOrDefaultAsync(d => d.CompetitionID == id);
                     if (competition != null)
                     {
-                        var Rounds = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
-                          .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).Where(d=>d.Competition.CompetitionID==competition.CompetitionID).ToListAsync();
+                        var Rounds = await _context.Round
+                            .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
+                          .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
+                          .Where(d => d.Competition.CompetitionID == competition.CompetitionID)
+                          .ToListAsync();
+                        HttpContext.Session.SetString(CompetitionKey, id.ToString());
+                        System.IO.File.AppendAllText(@"D:\Postavljanje.txt", HttpContext.Session.GetString(CompetitionKey));
+
                         return View(Rounds);
                     }
                     else return NotFound();
-
                 }
             }
-               
-            var gameCollection = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
-                          .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam).ToListAsync();
+            //TODO izlistati sva kola iz natjecanja pomocu sessiona
+            var CompID = new Guid(HttpContext.Session.GetString(CompetitionKey));
+            System.IO.File.AppendAllText(@"D:\Ponovo.txt", CompID.ToString());
+
+            var gameCollection = await _context.Round
+                .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
+               .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
+               .Where(d=>d.Competition.CompetitionID==CompID)
+               .ToListAsync();
             return View(gameCollection);
-            
         }
 
         // GET: Rounds/Details/5

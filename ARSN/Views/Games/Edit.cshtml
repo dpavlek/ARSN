@@ -8,46 +8,79 @@
 
 <h4>Game</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="GameID" />
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HomeResult" class="control-label"></label>
-                <input asp-for="HomeResult" class="form-control" />
-                <span asp-validation-for="HomeResult" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AwayResult" class="control-label"></label>
-                <input asp-for="AwayResult" class="form-control" />
-                <span asp-validation-for="AwayResult" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HomeTeam" class="control-label"></label>
-                <input asp-for="HomeTeam" value="@Model.HomeTeam.Name" class="form-control" disabled />
-                <span asp-validation-for="HomeTeam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AwayTeam" class="control-label"></label>
-                <input asp-for="AwayTeam" value="@Model.AwayTeam.Name" class="form-control" disabled />
-                <span asp-validation-for="AwayTeam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+@if (!@Model.Empty)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="GameID" />
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <input asp-for="Type" class="form-control" />
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeResult" class="control-label"></label>
+                    <input asp-for="HomeResult" class="form-control" />
+                    <span asp-validation-for="HomeResult" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AwayResult" class="control-label"></label>
+                    <input asp-for="AwayResult" class="form-control" />
+                    <span asp-validation-for="AwayResult" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeTeam" class="control-label"></label>
+                    <input asp-for="HomeTeam" value="@Model.HomeTeam.Name" class="form-control"  />
+                    <span asp-validation-for="HomeTeam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AwayTeam" class="control-label"></label>
+                    <input asp-for="AwayTeam" value="@Model.AwayTeam.Name" class="form-control"  />
+                    <span asp-validation-for="AwayTeam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-controller="Rounds" asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-controller="Rounds" asp-action="Index">Back to List</a>
+    </div>
+}
+
+@if (@Model.Empty)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="GameID" />
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <input asp-for="Type" class="form-control" />
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeTeam" class="control-label"></label>
+                    <input asp-for="HomeTeam" value="@Model.HomeTeam.Name" class="form-control"  />
+                    <span asp-validation-for="HomeTeam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="Rounds" asp-action="Index">Back to List</a>
+    </div>
+}
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
