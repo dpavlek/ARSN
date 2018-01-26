@@ -205,7 +205,7 @@ namespace ARSN.Controllers
             var game = await _context.Game.SingleOrDefaultAsync(m => m.GameID == id);
             _context.Game.Remove(game);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Rounds");
         }
 
         private bool GameExists(Guid id)

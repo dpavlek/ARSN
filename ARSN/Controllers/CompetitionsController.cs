@@ -273,7 +273,29 @@ namespace ARSN.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var competition = await _context.Competition.SingleOrDefaultAsync(m => m.CompetitionID == id);
+            var competition = await _context.Competition
+                .Include(d=>d.RoundCollection)
+                .SingleOrDefaultAsync(m => m.CompetitionID == id);
+          System.IO.File.WriteAllText(@"D:\comp.txt", competition.RoundCollection.ToString());
+
+            foreach (var round in competition.RoundCollection)
+            {
+                System.IO.File.WriteAllText(@"D:\round.txt", round.Name);
+
+                var Round = await _context.Round
+                    .Include(d => d.GameCollection)
+                    .SingleOrDefaultAsync(m => m.RoundID == round.RoundID);
+
+                foreach (var game in Round.GameCollection)
+                {
+                    var Game = await _context.Game
+                        .SingleOrDefaultAsync(d=>d.GameID==game.GameID);
+                    _context.Game.Remove(Game);
+                    
+                }
+                _context.Round.Remove(round);
+                //  await _context.SaveChangesAsync();
+            }
             _context.Competition.Remove(competition);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

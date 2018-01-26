@@ -132,7 +132,8 @@ namespace ARSN.Controllers
                             var competition = await _context.Competition.Include(d => d.RoundCollection).SingleOrDefaultAsync(d => d.CompetitionID == CurrentCompetition);
 
                             competition.RoundCollection.Add(NextRound);
-                          //  System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
+                            foreach(var round in competition.RoundCollection)
+                            System.IO.File.AppendAllText(@"D:\competitionRounds.txt", round.Name);
                             _context.Competition.Update(competition);
                             await _context.SaveChangesAsync();
                         }
@@ -175,24 +176,6 @@ namespace ARSN.Controllers
             return View(gameCollection);
         }
 
-        // GET: Rounds/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            
-            var round = await _context.Round
-                .SingleOrDefaultAsync(m => m.RoundID == id);
-            if (round == null)
-            {
-                return NotFound();
-            }
-
-            return View(round);
-        }
-
         // GET: Rounds/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -208,7 +191,7 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            return View(round);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Rounds/Delete/5
