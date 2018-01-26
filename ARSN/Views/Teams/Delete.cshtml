@@ -36,10 +36,21 @@
             @Html.DisplayFor(model => model.TrainerName)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="TeamID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input id="submit" type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+{
+
+<div class="text-danger">
+    <br/>
+    @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+</div>
+}
+
+
+

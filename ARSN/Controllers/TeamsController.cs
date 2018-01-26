@@ -164,10 +164,27 @@ namespace ARSN.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var team = await _context.Team.SingleOrDefaultAsync(m => m.TeamID == id);
-            _context.Team.Remove(team);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var homeTeam = await _context.Game
+                .Include(d => d.HomeTeam)
+                .SingleOrDefaultAsync(d => d.HomeTeam.TeamID == id);
+            var awayTeam = await _context.Game
+                    .Include(d => d.AwayTeam)
+                    .SingleOrDefaultAsync(d => d.AwayTeam.TeamID == id);
+            if (homeTeam==null && awayTeam==null)
+            {
+                var team = await _context.Team
+                    .SingleOrDefaultAsync(m => m.TeamID == id);
+                _context.Team.Remove(team);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("Error", "Odabrani tim je vec u natjecanju, nije ga moguce obrisati!");
+            }
+            var teamShow = await _context.Team
+               .SingleOrDefaultAsync(m => m.TeamID == id);
+            return View(teamShow);
         }
 
         private bool TeamExists(Guid id)
