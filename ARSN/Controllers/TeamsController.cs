@@ -35,6 +35,7 @@ namespace ARSN.Controllers
 
             var team = await _context.Team
                 .SingleOrDefaultAsync(m => m.TeamID == id);
+
             if (team == null)
             {
                 return NotFound();

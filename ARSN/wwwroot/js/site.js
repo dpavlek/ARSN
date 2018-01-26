@@ -6,9 +6,9 @@
 
         function HideshowManual() {
             document.getElementById('remove_hidden_manual').classList.remove("hidden");
-            document.getElementById('show_button_automatic').classList.add("hidden");
-            document.getElementById('show_button_manual').classList.add("hidden");//makne i kliknuti gumb da ne smeta i ne zbunjuje korisnika 
-            
+            document.getElementById('show_button_manual').classList.add("hidden"); 
+            document.getElementById('remove_hidden_automatic').classList.add("hidden");
+            document.getElementById('show_button_automatic').classList.remove("hidden");
         } 
         //Automatic adding for competitions remove hidden
         var buttonAutomaticAdd = document.getElementById('show_button_automatic')
@@ -16,9 +16,9 @@
 
         function HideshowAutomatic() {
             document.getElementById('remove_hidden_automatic').classList.remove("hidden");
-            document.getElementById('show_button_manual').classList.add("hidden");
-            document.getElementById('show_button_automatic').classList.add("hidden");//makne i kliknuti gumb da ne smeta i ne zbunjuje korisnika   
-
+            document.getElementById('show_button_automatic').classList.add("hidden");  
+            document.getElementById('remove_hidden_manual').classList.add("hidden");
+            document.getElementById('show_button_manual').classList.remove("hidden");
         } 
 
         var ButtonAddToCompetitionManual = document.getElementById('list_it_manual')
@@ -65,7 +65,8 @@
                         text += inputs[i].value + "\n";
                     }
                 }
-                document.getElementById("messageAreaAutomatic").value += text;         
+                document.getElementById("messageAreaAutomatic").value += text;
+                inputs.remove(inputs.selectedIndex);
             }   
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ARSN.Models;
 using Microsoft.AspNetCore.Http;
@@ -49,14 +48,12 @@ namespace ARSN.Controllers
                         if (Flag == true)
                         {
                             ModelState.AddModelError("Error", "Nisu uneseni svi rezultati!");
-                           // System.IO.File.AppendAllText(@"D:\error.txt", "Error nisu unesene sve igre!\n");
                         }
                         else
                         {
                             thisRound.Finished = true;
                             var NameOfOldRound = thisRound.Name;
                             Guid CurrentCompetition = thisRound.Competition.CompetitionID;
-                           // System.IO.File.AppendAllText(@"D:\cc.txt", CurrentCompetition.ToString());
 
                             string[] OldRoundLines = NameOfOldRound.Split(
                                     new[] { "." },
@@ -68,7 +65,6 @@ namespace ARSN.Controllers
                             if (ListOfWinners.LongCount() == 1)
                             {
                                 var CompetID = new Guid(HttpContext.Session.GetString(CompetitionKey));
-                                System.IO.File.AppendAllText(@"D:\winner.txt", ListOfWinners.ToArray().GetValue(0).ToString() + "\n");
                                 var LastCollection = await _context.Round.Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
                                  .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
                                  .Where(d=>d.Competition.CompetitionID==CompetID)
@@ -77,11 +73,6 @@ namespace ARSN.Controllers
                                 return View(LastCollection);
                             }
                             string[] lines = ListOfWinners.ToArray();
-
-                           // for (i = 0; i < lines.Length; i++)
-                             //   System.IO.File.AppendAllText(@"E:\winner.txt", lines[i]);
-                            //System.IO.File.AppendAllText(@"D:\winner.txt", lines[i]);
-
                             Team HomeTeam = null, AwayTeam = null;
                             List<Game> ListGames = new List<Game>();
                             Round NextRound = new Round
@@ -133,17 +124,13 @@ namespace ARSN.Controllers
 
                             competition.RoundCollection.Add(NextRound);
                             foreach(var round in competition.RoundCollection)
-                            System.IO.File.AppendAllText(@"D:\competitionRounds.txt", round.Name);
                             _context.Competition.Update(competition);
                             await _context.SaveChangesAsync();
                         }
                     }
                     else
                     {
-                        // System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
-                        System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
                         ModelState.AddModelError("Error", "Kolo je zavrseno !");
-
                     }
                 }
                 else
@@ -152,22 +139,17 @@ namespace ARSN.Controllers
                     if (competition != null)
                     {
                         var Rounds = await _context.Round
-                            .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
+                          .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
                           .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
                           .Where(d => d.Competition.CompetitionID == competition.CompetitionID)
                           .ToListAsync();
                         HttpContext.Session.SetString(CompetitionKey, id.ToString());
-                        System.IO.File.AppendAllText(@"D:\Postavljanje.txt", HttpContext.Session.GetString(CompetitionKey));
-
                         return View(Rounds);
                     }
                     else return NotFound();
                 }
             }
-            //TODO izlistati sva kola iz natjecanja pomocu sessiona
             var CompID = new Guid(HttpContext.Session.GetString(CompetitionKey));
-            System.IO.File.AppendAllText(@"D:\Ponovo.txt", CompID.ToString());
-
             var gameCollection = await _context.Round
                 .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
                .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
