@@ -19,33 +19,9 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                    <label class="control-label">Odabir sporta</label>
-                    <div class="col-md-10">
-                        <select id="SportType" name="SportType" class="form-control" asp-items="ViewBag.SportType">
-                            @if (Model.SportType == "Nogomet")
-    {
-                        <option value="Nogomet">Nogomet</option>
-                        <option value="Košarka">Košarka</option>
-                        <option value="Rukomet">Rukomet</option>
-
-}
-                            @if (Model.SportType == "Košarka")
-    {
-                        <option value="Košarka">Košarka</option>
-                        <option value="Nogomet">Nogomet</option>
-                        <option value="Rukomet">Rukomet</option>
-
-}
-                            @if (Model.SportType == "Rukomet")
-    {
-                        <option value="Rukomet">Rukomet</option>
-                        <option value="Košarka">Košarka</option>
-                        <option value="Nogomet">Nogomet</option>
-
-}
-
-                        </select>
-                    </div>
+                <label asp-for="SportType" class="control-label"></label>
+                <input asp-for="SportType" class="form-control" readonly />
+                <span asp-validation-for="SportType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CompetitionBegin" class="control-label"></label>

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -80,14 +79,11 @@ namespace ARSN.Controllers
                var homeTeam = await _context.Team
                     .SingleOrDefaultAsync(m => m.TeamID == HomeTeamID);
                 game.HomeTeam = homeTeam;
-               // System.IO.File.WriteAllText(@"D:\home.txt", homeTeam.Name);
 
                 Guid AwayTeamID = new Guid(Request.Form["AwayTeam"]);
                 var awayTeam = await _context.Team
                      .SingleOrDefaultAsync(m => m.TeamID == AwayTeamID);
                 game.AwayTeam = awayTeam;
-                //System.IO.File.WriteAllText(@"D:\away.txt", awayTeam.Name);
-
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -140,7 +136,6 @@ namespace ARSN.Controllers
                 {
                     Int32.TryParse(game.HomeResult, out int HomeResult);
                     Int32.TryParse(game.AwayResult, out int AwayResult);
-
                     if (HomeResult < AwayResult)
                         game.Winner = "Gosti";
                     else game.Winner = "Domaći";
@@ -212,7 +207,5 @@ namespace ARSN.Controllers
         {
             return _context.Game.Any(e => e.GameID == id);
         }
-
- 
     }
 }
