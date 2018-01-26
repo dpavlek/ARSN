@@ -9,7 +9,7 @@
             document.getElementById('remove_hidden_manual').classList.remove("hidden");
             document.getElementById('show_button_manual').classList.add("hidden"); 
             document.getElementById('remove_hidden_automatic').classList.add("hidden");
-            document.getElementById('show_button_automatic').classList.remove("hidden");
+            document.getElementById('show_button_automatic').classList.add("hidden");
         } 
         //Automatic adding for competitions remove hidden
         var buttonAutomaticAdd = document.getElementById('show_button_automatic')
@@ -19,7 +19,7 @@
             document.getElementById('remove_hidden_automatic').classList.remove("hidden");
             document.getElementById('show_button_automatic').classList.add("hidden");  
             document.getElementById('remove_hidden_manual').classList.add("hidden");
-            document.getElementById('show_button_manual').classList.remove("hidden");
+            document.getElementById('show_button_manual').classList.add("hidden");
         } 
 
         var ButtonAddToCompetitionManual = document.getElementById('list_it_manual')
@@ -112,6 +112,22 @@
                 return true
             }
         }
+
+
+function CheckResult() {
+    var HomeResult = document.getElementById("HomeResult").value;
+    var AwayResult = document.getElementById("AwayResult").value;
+    var error = document.getElementById("errorMessage");
+    if (HomeResult == AwayResult) {
+        error.innerHTML = "Unesite razlicite rezultate!";
+        return false;
+    }
+    else {
+        error.innerHTML = "";
+        return true
+    }
+}
+  
 
 if (ViewData.ModelState["Error"].Errors.Count > 0) {
 
