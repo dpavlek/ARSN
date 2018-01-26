@@ -9,6 +9,7 @@
 <script type="text/javascript" src="~/lib/jquery-bracket/jquery.bracket.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
 <table class="table">
     <thead>
         <tr>
@@ -67,11 +68,39 @@
     </tbody>
 </table>
 
+<script>
+    var matches = [];
+    var matches2 = [{ round: "1", home: "Croatia", away: "Serbia", homeRes: 30, awayRes: 22, winner: "Croatia" }];
+</script>
 
+@foreach (var item in Model)
+{
+    @foreach (var game in item.GameCollection)
+    {
+        <script>matches.push = {round: "@Html.DisplayNameFor(modelItem => item.Name)", home: "@Html.DisplayFor(modelItem => game.HomeTeam.Name)", away: "@Html.DisplayFor(modelItem => game.AwayTeam.Name)", homeRes: '@Html.DisplayFor(modelItem => game.HomeResult)', awayRes: '@Html.DisplayFor(modelItem => game.AwayResult)', winner: ""}</script>
+    }
+
+}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', { packages: ["orgchart"] });
     google.charts.setOnLoadCallback(drawChart);
+
+    var graphRows = [];
+
+    for (match in matches){
+        if (match.homeRes > match.awayRes)
+            match.winner = match.home + " " + match.round;
+        else
+            match.winner = match.away + " " + match.round;
+        graphRows.push([match.winner, match.winner, '']);
+        graphRows.push([match.home, match.winner, '']);
+        graphRows.push([match.away, match.winner, '']);
+    }
+
+    //graphRows.reverse();
+    console.log(matches);
+    console.log(graphRows);
 
     function drawChart() {
         var data = new google.visualization.DataTable();
@@ -80,15 +109,7 @@
         data.addColumn('string', 'ToolTip');
 
         // For each orgchart box, provide the name, manager, and tooltip to show.
-        data.addRows([
-            [{ v: 'Mike', f: 'Mike' },
-                '', 'The President'],
-            [{ v: 'Jim', f: 'Jim' },
-                'Mike', 'VP'],
-            ['Alice', 'Mike', ''],
-            ['Bob', 'Jim', 'Bob Sponge'],
-            ['Carol', 'Bob', '']
-        ]);
+        data.addRows(graphRows);
 
         // Create the chart.
         var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
