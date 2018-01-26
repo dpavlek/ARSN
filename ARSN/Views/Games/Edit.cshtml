@@ -4,14 +4,15 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
 
-<h4>Game</h4>
-<hr />
 @if (!@Model.Empty)
 {
     <div class="row">
-        <div class="col-md-4">
+        <h2>Izmjena</h2>
+
+        <h4>Utakmica</h4>
+        <hr />
+        <div>
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="GameID" />
@@ -41,15 +42,16 @@
                     <span asp-validation-for="AwayTeam" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" onclick="return CheckResult()"/>
+                    <input type="submit" value="Spremi" class="btn btn-default" onclick="return CheckResult()"/>
                 </div>
             </form>
         </div>
+        <div>
+            <a asp-controller="Rounds" asp-action="Index">Povratak</a>
+        </div>
     </div>
 
-    <div>
-        <a asp-controller="Rounds" asp-action="Index">Back to List</a>
-    </div>
+    
 }<div id="errorMessage" class="text-danger">
 
 </div>
@@ -57,7 +59,7 @@
 @if (@Model.Empty)
 {
     <div class="row">
-        <div class="col-md-4">
+        <div>
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="GameID" />
@@ -72,15 +74,16 @@
                     <span asp-validation-for="HomeTeam" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Spremi" class="btn btn-default" />
                 </div>
             </form>
         </div>
+        <div>
+            <a asp-controller="Rounds" asp-action="Index">Povratak</a>
+        </div>
     </div>
 
-    <div>
-        <a asp-controller="Rounds" asp-action="Index">Back to List</a>
-    </div>
+    
 }
 
 

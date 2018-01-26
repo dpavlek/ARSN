@@ -4,12 +4,13 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<h4>Competition</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <h2>Stvori novo</h2>
+
+    <h4>Natjecanje</h4>
+    <hr />
+    <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,95 +20,100 @@
             </div>
             <div class="form-group">
                 <div class="form-group">
-                    <label class="control-label">Odabir sporta</label>
-                    <div class="col-md-10">
-                        <select id="SportType" name="SportType" class="form-control">
-                            <option value="">--Odaberite sport--</option>
-                            <option value="Nogomet">Nogomet</option>
-                            <option value="Košarka">Košarka</option>
-                            <option value="Rukomet">Rukomet</option>
-                        </select>
+                    <div>
+                        <label class="control-label">Odabir sporta</label>
+                        </div>
+                        <div>
+                            <select id="SportType" name="SportType" class="form-control">
+                                <option value="">--Odaberite sport--</option>
+                                <option value="Nogomet">Nogomet</option>
+                                <option value="Košarka">Košarka</option>
+                                <option value="Rukomet">Rukomet</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CompetitionBegin" class="control-label"></label>
-                <input asp-for="CompetitionBegin" class="form-control" />
-                <span asp-validation-for="CompetitionBegin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompetitionEnd" class="control-label"></label>
-                <input asp-for="CompetitionEnd" class="form-control" />
-                <span asp-validation-for="CompetitionEnd" class="text-danger"></span>
-            </div>
-            
-            <!--Add teams to competition manual-->
-            <div class="hidden" id="remove_hidden_manual">
-                <div class="form-group">
-                    <label class="control-label"></label>
-                    <div class="col-md-10">
-                        <select id="list_home" name="HomeTeam" class="form-control" asp-items="ViewBag.HomeTeam">
-                            <option value="">--Select Home Team--</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label"></label>
-                    <div class="col-md-10">
-                        <select id="list_away" name="AwayTeam" class="form-control" asp-items="ViewBag.AwayTeam">
-                            <option value="">--Select Away Team--</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input id="list_it_manual" type="button" name="button" value="Dodaj timove u natjecanje" class="btn btn-default" />
-                </div>
+    <div class="form-group">
+        <label asp-for="CompetitionBegin" class="control-label"></label>
+        <input asp-for="CompetitionBegin" class="form-control" />
+        <span asp-validation-for="CompetitionBegin" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompetitionEnd" class="control-label"></label>
+        <input asp-for="CompetitionEnd" class="form-control" />
+        <span asp-validation-for="CompetitionEnd" class="text-danger"></span>
+    </div>
 
-                <div id="message">
-                    <textarea id="messageAreaManual" name="TeamList" class="form-control" readonly></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="submit" name="submit" value="Stvori natjecanje" class="btn btn-default" onclick="return CheckCreateValidationManual()"/>
-                </div>
+    <!--Add teams to competition manual-->
+    <div class="hidden" id="remove_hidden_manual">
+        <div class="form-group">
+            <label class="control-label"></label>
+            <div>
+                <label class="control-label">Domaćin</label>
+                <select id="list_home" name="HomeTeam" class="form-control" asp-items="ViewBag.HomeTeam">
+                    <option value="">-- Odaberi domaćina --</option>
+                </select>
             </div>
-            <div class="form-group">
-                <input type="button" id="show_button_manual" name="button" value="Ručno dodavanje parova" class="btn btn-default" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Gost</label>
+            <div>
+                <select id="list_away" name="AwayTeam" class="form-control" asp-items="ViewBag.AwayTeam">
+                    <option value="">-- Odaberi gosta --</option>
+                </select>
             </div>
-            <!--Add teams to competition automatic-->
-            <div class="hidden" id="remove_hidden_automatic">
-                <div class="form-group">
-                    <label class="control-label"></label>
-                    <div class="col-md-10">
-                        <select id="AutomaticList" name="Automatic" class="form-control" asp-items="ViewBag.HomeTeam">
-                            <option value="">--Select Team--</option>
-                        </select>
-                    </div>
-                </div>
+        </div>
+        <div class="form-group">
+            <input id="list_it_manual" type="button" name="button" value="Dodaj timove u natjecanje" class="btn btn-default" />
+        </div>
 
-                <div class="form-group">
-                    <input id="list_it_automatic" type="button" name="button" value="Dodaj timove u natjecanje" class="btn btn-default" />
-                </div>
-
-                <div id="message">
-                    <textarea id="messageAreaAutomatic" name="TeamList2" class="form-control" readonly></textarea>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" name="submit" value="Generiraj parove i stvori natjecanje" class="btn btn-default" onclick="return CheckCreateValidationAutomatic()"/>
-                </div>
+        <div id="message">
+            <textarea id="messageAreaManual" name="TeamList" class="form-control" readonly></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" name="submit" value="Stvori natjecanje" class="btn btn-default" onclick="return CheckCreateValidationManual()" />
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="button" id="show_button_manual" name="button" value="Ručno dodavanje parova" class="btn btn-default" />
+    </div>
+    <!--Add teams to competition automatic-->
+    <div class="hidden" id="remove_hidden_automatic">
+        <div class="form-group">
+            <label class="control-label"></label>
+            <div>
+                <label class="control-label">Odabir tima:</label>
+                <select id="AutomaticList" name="Automatic" class="form-control" asp-items="ViewBag.HomeTeam">
+                    <option value="">-- Odaberi tim --</option>
+                </select>
             </div>
-            <div class="form-group">
-                <input type="button"id="show_button_automatic" name="button" value="Automatsko dodavanje parova" class="btn btn-default" />
-            </div>
-            
-        </form>
+        </div>
+
+        <div class="form-group">
+            <input id="list_it_automatic" type="button" name="button" value="Dodaj timove u natjecanje" class="btn btn-default" />
+        </div>
+
+        <div id="message">
+            <textarea id="messageAreaAutomatic" name="TeamList2" class="form-control" readonly></textarea>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" value="Generiraj parove i stvori natjecanje" class="btn btn-default" onclick="return CheckCreateValidationAutomatic()" />
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="button" id="show_button_automatic" name="button" value="Automatsko dodavanje parova" class="btn btn-default" />
+    </div>
+
+</form>
         <div id="errorMessage" class="text-danger" >
 
         </div>
     </div>
+    <div>
+        <a asp-action="Index">Povratak</a>
+    </div>
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Početna stranica kola</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="~/lib/jquery-bracket/jquery.bracket.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -53,9 +53,9 @@
             <td>
                 @foreach (var game in item.GameCollection)
     {
-            <a asp-controller="Games" asp-action="Edit" asp-route-id="@game.GameID">Edit</a> <span>|</span>
-            <a asp-controller="Games" asp-action="Details" asp-route-id="@game.GameID"> Details </a> <span>|</span>
-            <a asp-controller="Games" asp-action="Delete" asp-route-id="@game.GameID"> Delete </a>
+            <a asp-controller="Games" asp-action="Edit" asp-route-id="@game.GameID">Izmjena</a> <span>|</span>
+            <a asp-controller="Games" asp-action="Details" asp-route-id="@game.GameID"> Detalji</a> <span>|</span>
+            <a asp-controller="Games" asp-action="Delete" asp-route-id="@game.GameID"> Brisanje </a>
             <br />
 }
             </td>
