@@ -1,5 +1,6 @@
 ﻿// Write your JavaScript code.
 
+        var NumberOfTeams = 0;
         //Manual adding for comeptitions remove hidden
         var buttonManualAdd = document.getElementById('show_button_manual')
         buttonManualAdd.addEventListener('click', HideshowManual, false);
@@ -60,6 +61,7 @@
 
         //Gets elements from lists and writes them in text box for automatic additions
         function AddToTextAreaForAutomatic(list) {
+           
             if (document.getElementById("AutomaticList").value == "") {
                 return false;
             }
@@ -69,11 +71,12 @@
                 for (var i = 0; i < inputs.options.length; i++) {
                     if (inputs.options[i].selected == true && inputs.options[i].selected != "") {
                         text += inputs[i].value + "\n";
+                        NumberOfTeams++;
                     }
                 }
                 document.getElementById("messageAreaAutomatic").value += text;
                 inputs.remove(inputs.selectedIndex);
-            }   
+            } 
         }
 
         //Checks wheather user selected any team for the championship
@@ -83,6 +86,11 @@
             var error = document.getElementById("errorMessage");
             if (textVal == "" || sportType == "") {
                 error.innerHTML = "Nisu dodani timovi ili nije odabran sport";
+                return false;
+            }
+            else if (NumberOfTeams < 2) {
+                var error = document.getElementById("errorMessage");
+                error.innerHTML = "Dodajte barem dva tima.";
                 return false;
             }
             else {
