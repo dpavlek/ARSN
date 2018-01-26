@@ -140,7 +140,9 @@ namespace ARSN.Controllers
                     else
                     {
                         // System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
-                        System.IO.File.AppendAllText(@"E:\locked.txt", "Kolo zavrseno\n");
+                        System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
+                        ModelState.AddModelError("Error", "Kolo je zavrseno !");
+
                     }
                 }
                 else
