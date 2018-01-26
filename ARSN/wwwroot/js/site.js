@@ -58,9 +58,7 @@
                     text += inputs[i].value + "\n";
                 }
             }
-            document.getElementById("messageAreaAutomatic").value += text;
-           // alert("alert");
-            
+            document.getElementById("messageAreaAutomatic").value += text;            
         }
 
         //Checks wheather user selected any team for the championship
@@ -91,9 +89,6 @@
                 return true
             }
         }
-
-        
-
 
 
   
