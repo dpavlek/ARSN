@@ -58,9 +58,7 @@
                     text += inputs[i].value + "\n";
                 }
             }
-            document.getElementById("messageAreaAutomatic").value += text;
-           // alert("alert");
-            
+            document.getElementById("messageAreaAutomatic").value += text;            
         }
 
         //Checks wheather user selected any team for the championship
@@ -85,15 +83,3 @@
                 return true
             }
         }
-
-
-
-  
-
-if (ViewData.ModelState["Error"].Errors.Count > 0) {
-
-    $(document).ready(function () {
-        alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage');
-    });
-
-}

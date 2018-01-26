@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ARSN.Migrations
 {
-    public partial class DBVersion124 : Migration
+    public partial class db_version1212 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

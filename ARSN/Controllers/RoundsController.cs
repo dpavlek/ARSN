@@ -48,15 +48,15 @@ namespace ARSN.Controllers
                         }
                         if (Flag == true)
                         {
-                            ModelState.AddModelError("Error", "Nisu unešeni svi rezultati!");
-                            System.IO.File.AppendAllText(@"D:\error.txt", "Error nisu unesene sve igre!\n");
+                            ModelState.AddModelError("Error", "Nisu uneseni svi rezultati!");
+                           // System.IO.File.AppendAllText(@"D:\error.txt", "Error nisu unesene sve igre!\n");
                         }
                         else
                         {
                             thisRound.Finished = true;
                             var NameOfOldRound = thisRound.Name;
                             Guid CurrentCompetition = thisRound.Competition.CompetitionID;
-                            System.IO.File.AppendAllText(@"D:\cc.txt", CurrentCompetition.ToString());
+                           // System.IO.File.AppendAllText(@"D:\cc.txt", CurrentCompetition.ToString());
 
                             string[] OldRoundLines = NameOfOldRound.Split(
                                     new[] { "." },
@@ -73,11 +73,13 @@ namespace ARSN.Controllers
                                  .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
                                  .Where(d=>d.Competition.CompetitionID==CompetID)
                                  .ToListAsync();
+                                ModelState.AddModelError("Error", "Pobjednik natjecanja je: " + ListOfWinners.ToArray().GetValue(0).ToString());
                                 return View(LastCollection);
                             }
                             string[] lines = ListOfWinners.ToArray();
 
-                            // for (i = 0; i < lines.Length; i++)
+                           // for (i = 0; i < lines.Length; i++)
+                             //   System.IO.File.AppendAllText(@"E:\winner.txt", lines[i]);
                             //System.IO.File.AppendAllText(@"D:\winner.txt", lines[i]);
 
                             Team HomeTeam = null, AwayTeam = null;
@@ -130,14 +132,15 @@ namespace ARSN.Controllers
                             var competition = await _context.Competition.Include(d => d.RoundCollection).SingleOrDefaultAsync(d => d.CompetitionID == CurrentCompetition);
 
                             competition.RoundCollection.Add(NextRound);
-                            System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
+                          //  System.IO.File.WriteAllText(@"D:\competition.txt", competition.Name);
                             _context.Competition.Update(competition);
                             await _context.SaveChangesAsync();
                         }
                     }
                     else
                     {
-                        System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
+                        // System.IO.File.AppendAllText(@"D:\locked.txt", "Kolo zavrseno\n");
+                        System.IO.File.AppendAllText(@"E:\locked.txt", "Kolo zavrseno\n");
                     }
                 }
                 else

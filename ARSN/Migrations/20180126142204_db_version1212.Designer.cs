@@ -11,8 +11,8 @@ using System;
 namespace ARSN.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180126125013_DBVersion124")]
-    partial class DBVersion124
+    [Migration("20180126142204_db_version1212")]
+    partial class db_version1212
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

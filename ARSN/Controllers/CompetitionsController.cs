@@ -97,7 +97,7 @@ namespace ARSN.Controllers
             
             if (ModelState.IsValid)
             {
-                System.IO.File.WriteAllText(@"D:\button.txt", submit);
+               // System.IO.File.WriteAllText(@"D:\button.txt", submit);
                 string[] lines;
                 if (submit== "Generiraj parove i stvori natjecanje")
                 {
@@ -107,13 +107,13 @@ namespace ARSN.Controllers
                             StringSplitOptions.None
                         );
                     //Randomizing teams
-                     for (int i = 0; i < TempLines.Length; i++)
-                            System.IO.File.AppendAllText(@"D:\before.txt", TempLines[i]);
+                //     for (int i = 0; i < TempLines.Length; i++)
+                //            System.IO.File.AppendAllText(@"D:\before.txt", TempLines[i]);
                        var List = TempLines.ToList();
                     List.Shuffle();
                     foreach (var temp in List)
                        {
-                        System.IO.File.AppendAllText(@"D:\after.txt", temp);
+                 //       System.IO.File.AppendAllText(@"D:\after.txt", temp);
                       }
                      lines = List.ToArray();
                     //lines = TempLines;
@@ -127,8 +127,8 @@ namespace ARSN.Controllers
                         );
                 }
 
-                for (int i = 0; i < lines.Length; i++)
-                    System.IO.File.AppendAllText(@"D:\afterrrrr.txt", lines[i]);
+             //   for (int i = 0; i < lines.Length; i++)
+             //       System.IO.File.AppendAllText(@"D:\afterrrrr.txt", lines[i]);
                 Team HomeTeam =null, AwayTeam=null;
                 List<Game> ListGames=new List<Game>();
                 Round FirstRound = new Round
@@ -136,7 +136,7 @@ namespace ARSN.Controllers
                     Name = "1.kolo",
                     Finished = false
                 };
-                System.IO.File.AppendAllText(@"D:\size.txt", lines.Length.ToString());
+            //    System.IO.File.AppendAllText(@"D:\size.txt", lines.Length.ToString());
                 if (lines.Length % 2 == 0)
                 {
                     HomeTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == lines[lines.Length-2]);
@@ -157,8 +157,8 @@ namespace ARSN.Controllers
                 {
                     HomeTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == lines[i]);
                     AwayTeam = await _context.Team.SingleOrDefaultAsync(d => d.Name == lines[i+1]);
-                    System.IO.File.AppendAllText(@"D:\for.txt", HomeTeam.Name);
-                    System.IO.File.AppendAllText(@"D:\for.txt", AwayTeam.Name);
+              //      System.IO.File.AppendAllText(@"D:\for.txt", HomeTeam.Name);
+              //      System.IO.File.AppendAllText(@"D:\for.txt", AwayTeam.Name);
                     Game NewGame = new Game
                     {
                         HomeTeam = HomeTeam,
@@ -182,7 +182,7 @@ namespace ARSN.Controllers
                 };
                 competition.RoundCollection=ListRound;
                 competition.ApplicationUser =await  _userManager.GetUserAsync(User);
-                System.IO.File.WriteAllText(@"D:\home.txt", competition.ApplicationUser.Email);
+             //   System.IO.File.WriteAllText(@"D:\home.txt", competition.ApplicationUser.Email);
                 _context.Add(competition);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
