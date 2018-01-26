@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ARSN.Models
 {
-    public class Game
+    public class Game //: IValidatableObject
     {
         #region Properties
 
@@ -30,6 +30,16 @@ namespace ARSN.Models
                 return (AwayTeam==null);
             }
         }
+        /*
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (HomeResult == AwayResult)
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Rezultat mora biti različit!",
+                                       memberNames: new[] { "AwayResult" });
+            }
+        }*/
         #endregion Properties
 
     }

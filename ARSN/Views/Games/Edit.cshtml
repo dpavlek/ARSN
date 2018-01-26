@@ -22,12 +22,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="HomeResult" class="control-label"></label>
-                    <input asp-for="HomeResult" class="form-control" />
+                    <input id="HomeResult" asp-for="HomeResult" class="form-control" />
                     <span asp-validation-for="HomeResult" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="AwayResult" class="control-label"></label>
-                    <input asp-for="AwayResult" class="form-control" />
+                    <input id="AwayResult" asp-for="AwayResult" class="form-control" />
                     <span asp-validation-for="AwayResult" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -41,7 +41,7 @@
                     <span asp-validation-for="AwayTeam" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-default" onclick="return CheckResult()"/>
                 </div>
             </form>
         </div>
@@ -50,7 +50,9 @@
     <div>
         <a asp-controller="Rounds" asp-action="Index">Back to List</a>
     </div>
-}
+}<div id="errorMessage" class="text-danger">
+
+</div>
 
 @if (@Model.Empty)
 {
