@@ -50,15 +50,19 @@
 
         //Gets elements from lists and writes them in text box for automatic additions
         function AddToTextAreaForAutomatic(list) {
-            var text = [];
-            var inputs = document.getElementById("AutomaticList");
-            for (var i = 0; i < inputs.options.length; i++) {
-                if (inputs.options[i].selected == true && inputs.options[i].selected != "")
-                {
-                    text += inputs[i].value + "\n";
-                }
+            if (document.getElementById("AutomaticList").value == "") {
+                return false;
             }
-            document.getElementById("messageAreaAutomatic").value += text;            
+            else {
+                var text = [];
+                var inputs = document.getElementById("AutomaticList");
+                for (var i = 0; i < inputs.options.length; i++) {
+                    if (inputs.options[i].selected == true && inputs.options[i].selected != "") {
+                        text += inputs[i].value + "\n";
+                    }
+                }
+                document.getElementById("messageAreaAutomatic").value += text;         
+            }   
         }
 
         //Checks wheather user selected any team for the championship
