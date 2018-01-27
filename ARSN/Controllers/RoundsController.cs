@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARSN.Models;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ARSN.Controllers
 {
@@ -125,6 +126,8 @@ namespace ARSN.Controllers
                             competition.RoundCollection.Add(NextRound);
                             foreach(var round in competition.RoundCollection)
                             _context.Competition.Update(competition);
+                            PopulateGraph(id);
+
                             await _context.SaveChangesAsync();
                         }
                     }
@@ -144,19 +147,59 @@ namespace ARSN.Controllers
                           .Where(d => d.Competition.CompetitionID == competition.CompetitionID)
                           .ToListAsync();
                         HttpContext.Session.SetString(CompetitionKey, id.ToString());
+                         PopulateGraph(id);
                         return View(Rounds);
                     }
                     else return NotFound();
                 }
             }
-            var CompID = new Guid(HttpContext.Session.GetString(CompetitionKey));
-            var gameCollection = await _context.Round
-                .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
-               .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
-               .Where(d=>d.Competition.CompetitionID==CompID)
-               .ToListAsync();
+     
+                var CompID = new Guid(HttpContext.Session.GetString(CompetitionKey));
+                var gameCollection = await _context.Round
+                   .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
+                  .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
+                  .Where(d => d.Competition.CompetitionID == CompID)
+                  .ToListAsync();
+            PopulateGraph(CompID);
             return View(gameCollection);
         }
+
+        private async void PopulateGraph(Guid? id)
+        {
+            ViewBag.Rows = null;
+            var RoundCollection = await _context.Round
+                    .Include(d => d.GameCollection).ThenInclude(x => x.HomeTeam)
+                   .Include(d => d.GameCollection).ThenInclude(x => x.AwayTeam)
+                   .Where(d => d.Competition.CompetitionID == id)
+                   .ToListAsync();
+            int i = 0;
+            string Current = "";
+            string Previous = " ";
+            List<string> Elemental = new List<string>();
+            foreach (var round in RoundCollection)
+            {
+                foreach(var game in round.GameCollection)
+                {
+                   // System.IO.File.AppendAllText(@"D:/game.txt", game.HomeTeam.Name);
+                    Elemental.Add(game.HomeTeam.Name+Current);
+                    if (game.Winner == "Domaći") Elemental.Add(game.HomeTeam.Name+Previous);
+                    else if (game.Winner == "Gosti") Elemental.Add(game.AwayTeam.Name + Previous);
+                    else Elemental.Add("");
+                    if (game.AwayTeam != null)
+                    {
+                        Elemental.Add(game.AwayTeam.Name + Current);
+                        if (game.Winner == "Domaći") Elemental.Add(game.HomeTeam.Name + Previous);
+                        else if (game.Winner == "Gosti") Elemental.Add(game.AwayTeam.Name + Previous);
+                        else Elemental.Add("");
+                    }          
+                }
+                Current = Current + " ";
+                Previous = Previous + " ";
+            }
+            TempData["Rows"] = JsonConvert.SerializeObject(Elemental);
+           // ViewBag.Rows = JsonConvert.SerializeObject(Elemental);
+        }
+
 
         // GET: Rounds/Delete/5
         public async Task<IActionResult> Delete(Guid? id)

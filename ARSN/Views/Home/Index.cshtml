@@ -1,56 +1,34 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', { packages: ["orgchart"] });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Name');
-        data.addColumn('string', 'Manager');
-        data.addColumn('string', 'ToolTip');
-
-        // For each orgchart box, provide the name, manager, and tooltip to show.
-        data.addRows([
-            [{ v: 'Mike', f: 'Mike<div style="color:red; font-style:italic">President</div>' },
-                '', 'The President'],
-            [{ v: 'Jim', f: 'Jim<div style="color:red; font-style:italic">Vice President</div>' },
-                'Jim', 'VP'],
-            ['Alice', 'Mike', ''],
-            ['Bob', 'Mike', 'Bob Sponge'],
-            ['Carol', 'Bob', ''],
-            ['Mike', 'Alice', '']
-        ]);
-        //console.log(data);
-        // Create the chart.
-        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-        // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, { allowHtml: true });
-    }
-
-
-
-
-
-
-
-
-    //TODO: UREDIT INDEX PAGE!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-<div id="chart_div"></div>
-
+<div class="col-md-3"></div>
+<div class="col-md-6">
+    <p>
+        ARSN je web aplikacija koja omogućuje pregled sportskih natjecanja, rezultata
+        natjecanja i parove sudionika natjecanja. Također, web aplikacija omogućuje registriranje
+        organizatora natjecanja koji će imati dodatnu mogućnost dodavanja sudionika natjecanja i
+        unos rezultata, dok će web aplikacija generirati parove koji će igrati.
+    </p>
+    <br /><br />
+    <p>
+        ARSN omogućuje organizatorima mogućnost unošenja novih timova, natjecanja ovisno o sportu, rezultata novih sportova,
+        automatsko generiranje ždrijeba ili ručno dodavanje parova u jednome turniru te generiranje kola i prikaz vizualizacije tog natjecanja.
+        Korisnici mogu vidjeti rezultate natjecanja u tabličnom obliku ili kao graf te detalje o svakome natjecanju, timu, kolu itd.
+    </p>
+    <br /><br />
+    <p>
+        ARSN je napravljen kao alat za vođenje rezultata sportskih natjecanja i sadrži 3 glavna i najpopularnija sporta koji se igraju na njima:
+        <ul>
+            <li>Nogomet</li>
+            <li>Košarku i</li>
+            <li>Rukomet</li>
+        </ul>
+    </p>
+    <br/> <br/>
+    <p>
+        ARSN je napravljen kao projekt u sklopu kolegija Osiguranje kakvoće programske podrške i napravljen je koristeći ASP.NET Core MVC tehnologiju kao osnovu projekta.
+        Za generiranje baze podataka korišten je Entity Framework Core i ručno su dodavane određene relacije koje u istom još nisu podržane. Zato što je Core projekt
+        moguće ga je koristiti na više platformi.
+    </p>
+</div>
+<div class="col-md-3"></div>
