@@ -301,6 +301,28 @@ footer {
 .errorMessage {
     color: red;
     font-size: small;
+}
 
+.node {
+    cursor: pointer;
+}
 
+    .node circle {
+        fill: #fff;
+        stroke: green;
+        stroke-width: 3px;
+    }
+
+.node text {
+    font: 12px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+
+table.google-visualization-orgchart-table {
+    border-collapse: inherit;
 }

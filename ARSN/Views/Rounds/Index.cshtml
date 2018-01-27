@@ -6,7 +6,6 @@
 
 <h2>Početna stranica kola</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="~/lib/jquery-bracket/jquery.bracket.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
@@ -29,96 +28,79 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @foreach (var game in item.GameCollection)
-        {
-            @Html.DisplayFor(modelItem => game.HomeTeam.Name)
-            <span>-</span>
-            @Html.DisplayFor(modelItem => game.AwayTeam.Name)
-            <br />
-}
-            </td>
-            <td>
-                @foreach (var game in item.GameCollection)
-        {
-            @Html.DisplayFor(modelItem => game.HomeResult)
-            <span>-</span>
-            @Html.DisplayFor(modelItem => game.AwayResult)
-            <br />
-}
-            </td>
-            <td>
-                @foreach (var game in item.GameCollection)
-    {
-            <a asp-controller="Games" asp-action="Edit" asp-route-id="@game.GameID">Izmjena</a> <span>|</span>
-            <a asp-controller="Games" asp-action="Details" asp-route-id="@game.GameID"> Detalji</a> <span>|</span>
-            <a asp-controller="Games" asp-action="Delete" asp-route-id="@game.GameID"> Brisanje </a>
-            <br />
-}
-            </td>
-            <td>
-                <a asp-controller="Rounds" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @foreach (var game in item.GameCollection)
+                    {
+                        @Html.DisplayFor(modelItem => game.HomeTeam.Name)
+                        <span>-</span>
+                        @Html.DisplayFor(modelItem => game.AwayTeam.Name)
+                        <br />
+                    }
+                </td>
+                <td>
+                    @foreach (var game in item.GameCollection)
+                    {
+                        @Html.DisplayFor(modelItem => game.HomeResult)
+                        <span>-</span>
+                        @Html.DisplayFor(modelItem => game.AwayResult)
+                        <br />
+                    }
+                </td>
+                <td>
+                    @foreach (var game in item.GameCollection)
+                    {
+                        <a asp-controller="Games" asp-action="Edit" asp-route-id="@game.GameID">Izmjena</a> <span>|</span>
+                        <a asp-controller="Games" asp-action="Details" asp-route-id="@game.GameID"> Detalji</a> <span>|</span>
+                        <a asp-controller="Games" asp-action="Delete" asp-route-id="@game.GameID"> Brisanje </a>
+                        <br />
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Rounds" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
 
-<script>
-    var matches = [];
-    var matches2 = [{ round: "1", home: "Croatia", away: "Serbia", homeRes: 30, awayRes: 22, winner: "Croatia" }];
-</script>
-
-@foreach (var item in Model)
-{
-    @foreach (var game in item.GameCollection)
-    {
-        <script>matches.push = {round: "@Html.DisplayNameFor(modelItem => item.Name)", home: "@Html.DisplayFor(modelItem => game.HomeTeam.Name)", away: "@Html.DisplayFor(modelItem => game.AwayTeam.Name)", homeRes: '@Html.DisplayFor(modelItem => game.HomeResult)', awayRes: '@Html.DisplayFor(modelItem => game.AwayResult)', winner: ""}</script>
-    }
-
-}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', { packages: ["orgchart"] });
     google.charts.setOnLoadCallback(drawChart);
 
-    var graphRows = [];
-
-    for (match in matches){
-        if (match.homeRes > match.awayRes)
-            match.winner = match.home + " " + match.round;
-        else
-            match.winner = match.away + " " + match.round;
-        graphRows.push([match.winner, match.winner, '']);
-        graphRows.push([match.home, match.winner, '']);
-        graphRows.push([match.away, match.winner, '']);
-    }
-
-    //graphRows.reverse();
-    console.log(matches);
-    console.log(graphRows);
-
     function drawChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Name');
-        data.addColumn('string', 'Manager');
-        data.addColumn('string', 'ToolTip');
+        data.addColumn('string', 'Successor');
+       
 
         // For each orgchart box, provide the name, manager, and tooltip to show.
-        data.addRows(graphRows);
+        var text ="@ViewBag.Rows";
+        var text = text.replace(/&quot;/g, '\\"');
+        var result = text.slice(1, -1);
+        result = result.replace(/\\"/g, '');
+        var array = result.split(",");
+        console.log(array);
+        for (i = 0; i < array.length; i += 2) {
+            var tempArray = [array[i], array[i + 1]];
+            console.log(tempArray);
+            data.addRows([tempArray]);
+        }
 
         // Create the chart.
         var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
         // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, { allowHtml: true });
+        chart.draw(data);      
     }
 </script>
+<br/>
 <div id="chart_div"></div>
-    
+
+
 @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
 {
     <script>

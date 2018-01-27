@@ -26,7 +26,9 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <a asp-controller="Rounds" asp-action="Index" asp-route-id="@item.CompetitionID">
+                         @Html.DisplayFor(modelItem => item.Name)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CompetitionBegin)
