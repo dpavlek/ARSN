@@ -79,7 +79,7 @@
        
 
         // For each orgchart box, provide the name, manager, and tooltip to show.
-        var text ="@ViewBag.Rows";
+        var text ="@TempData["Rows"]";
         var text = text.replace(/&quot;/g, '\\"');
         var result = text.slice(1, -1);
         result = result.replace(/\\"/g, '');

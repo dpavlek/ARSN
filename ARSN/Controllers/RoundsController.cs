@@ -126,6 +126,8 @@ namespace ARSN.Controllers
                             competition.RoundCollection.Add(NextRound);
                             foreach(var round in competition.RoundCollection)
                             _context.Competition.Update(competition);
+                            PopulateGraph(id);
+
                             await _context.SaveChangesAsync();
                         }
                     }
@@ -194,8 +196,8 @@ namespace ARSN.Controllers
                 Current = Current + " ";
                 Previous = Previous + " ";
             }
-
-            ViewBag.Rows = JsonConvert.SerializeObject(Elemental);
+            TempData["Rows"] = JsonConvert.SerializeObject(Elemental);
+           // ViewBag.Rows = JsonConvert.SerializeObject(Elemental);
         }
 
 
