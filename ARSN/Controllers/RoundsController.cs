@@ -180,7 +180,6 @@ namespace ARSN.Controllers
             {
                 foreach(var game in round.GameCollection)
                 {
-                   // System.IO.File.AppendAllText(@"D:/game.txt", game.HomeTeam.Name);
                     Elemental.Add(game.HomeTeam.Name+Current);
                     if (game.Winner == "Domaći") Elemental.Add(game.HomeTeam.Name+Previous);
                     else if (game.Winner == "Gosti") Elemental.Add(game.AwayTeam.Name + Previous);
@@ -197,7 +196,6 @@ namespace ARSN.Controllers
                 Previous = Previous + " ";
             }
             TempData["Rows"] = JsonConvert.SerializeObject(Elemental);
-           // ViewBag.Rows = JsonConvert.SerializeObject(Elemental);
         }
 
 
