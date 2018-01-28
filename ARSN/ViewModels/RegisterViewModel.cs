@@ -23,7 +23,7 @@ namespace ARSN.ViewModels
         public string Organisation { get; set; }
         [DataType(DataType.PhoneNumber), Display(Name ="Broj telefona")]
         public string PhoneNumber { get; set; }
-        [MaxLength(1, ErrorMessage = "Spol se sastoji od samo jednog znaka (M ili Ž)"), Display(Name ="Spol (M/Ž)")]
+        [MaxLength(1, ErrorMessage = "Spol se sastoji od samo jednog znaka"), Display(Name ="Spol")]
         public string Gender { get; set; }
     }
 }
