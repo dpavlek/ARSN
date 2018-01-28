@@ -5,7 +5,7 @@ namespace ARSN.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required, EmailAddress, MaxLength(256), Display(Name = "Email")]
+        [Required, EmailAddress(ErrorMessage = "Nije unesena validna Email adresa"), MaxLength(256), Display(Name = "Email")]
         public string Email { get; set; }
         [Required, MinLength(6),MaxLength(50),DataType(DataType.Password), Display(Name = "Lozinka")]
         public string Password { get; set; }
@@ -19,11 +19,11 @@ namespace ARSN.ViewModels
         [DataType(DataType.Date), Display(Name ="Datum Rođenja")]
         [Range(typeof(DateTime), "1/1/1900", "1/1/2018", ErrorMessage = "Datum je izvan granica")]
         public DateTime BirthDate { get; set; }
-        [Required, Display(Name ="Organizacija")]
+        [Required(ErrorMessage = "Polje Organizacija je obavezno"), Display(Name ="Organizacija")]
         public string Organisation { get; set; }
         [DataType(DataType.PhoneNumber), Display(Name ="Broj telefona")]
         public string PhoneNumber { get; set; }
-        [MaxLength(1), Display(Name ="Spol")]
+        [MaxLength(1, ErrorMessage = "Spol se sastoji od samo jednog znaka (M ili Ž)"), Display(Name ="Spol (M/Ž)")]
         public string Gender { get; set; }
     }
 }

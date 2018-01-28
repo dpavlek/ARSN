@@ -14,14 +14,19 @@ namespace ARSN.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GameID { get; set; }
+        [Display(Name = "Vrsta sporta")]
         public string Type { get; set; }
-        [Range(typeof(int), "0", "100"), Display(Name = "Rezultat domaćina")]
+        [Range(typeof(int), "0", "200", ErrorMessage = "Rezultat mora biti između 0 i 200"), Display(Name = "Rezultat domaćina")]
         public string HomeResult { get; set; }
-        [Range(typeof(int), "0", "100"), Display(Name = "Rezultat u gostima")]
+        [Range(typeof(int), "0", "200", ErrorMessage = "Rezultat mora biti između 0 i 200"), Display(Name = "Rezultat u gostima")]
         public string AwayResult { get; set; }
+        [Display(Name = "Pobjednik")]
         public string Winner { get; set; }
+        [Display(Name = "Kolo")]
         public Round Round { get; set; }
+        [Display(Name = "Domaćin")]
         public Team HomeTeam { get; set; }
+        [Display(Name = "Gost")]
         public Team AwayTeam { get; set; }
         public bool Empty
         {

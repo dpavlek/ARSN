@@ -177,6 +177,7 @@ namespace ARSN.Controllers
         // GET: Games/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
+            var user = await _userManager.GetUserAsync(User);
             if (id == null)
             {
                 return NotFound();
@@ -189,7 +190,14 @@ namespace ARSN.Controllers
                 return NotFound();
             }
 
-            return View(game);
+              if (User.Identity.IsAuthenticated && user.Verified)
+            {
+                return View(game);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Games/Delete/5

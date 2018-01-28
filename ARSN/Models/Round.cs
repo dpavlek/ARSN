@@ -16,6 +16,7 @@ namespace ARSN.Models
         public Guid RoundID { get; set; }
         [Display(Name = "Ime")]
         public string Name { get; set; }
+        [Display(Name="Natjecanje")]
         public Competition Competition { get; set; }
         public bool Finished { get; set; }
         public ICollection<Game> GameCollection { get; set; }

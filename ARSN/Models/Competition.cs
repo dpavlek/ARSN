@@ -14,9 +14,9 @@ namespace ARSN.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid CompetitionID { get; set; }
-        [Required, StringLength(30, MinimumLength = 3), Display(Name = "Ime natjecanja")]
+        [Required, StringLength(30, MinimumLength = 3, ErrorMessage = "Minimalna dužina mora biti 3 znaka"), Display(Name = "Ime natjecanja")]
         public string Name { get; set; }
-        [Required, StringLength(30, MinimumLength = 3), Display(Name = "Sport")]
+        [Required, StringLength(30, MinimumLength = 3, ErrorMessage = "Minimalna dužina mora biti 3 znaka"), Display(Name = "Sport")]
         public string SportType { get; set; }
         [DataType(DataType.Date), Display(Name = "Početak natjecanja")]
         [Range(typeof(DateTime), "1/1/1900", "1/1/2100", ErrorMessage = "Datum je izvan granica")]
