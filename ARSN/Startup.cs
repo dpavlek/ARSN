@@ -25,7 +25,7 @@ namespace ARSN
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0"));
+            services.AddDbContext<DBContext>(options => options.UseSqlServer(@"Server = tcp:arsn20180127103944dbserver.database.windows.net,1433; Initial Catalog = EFGetStarted.AspNetCore.NewDb; Persist Security Info = False; User ID = arsnferit; Password = Binarci2018; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;"));
             services.AddMvc();
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddDistributedMemoryCache();
