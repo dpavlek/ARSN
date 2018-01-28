@@ -203,18 +203,20 @@ namespace ARSN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("CompetitionID,Name,SportType,CompetitionBegin,CompetitionEnd")] Competition competition)
+        public async Task<IActionResult> Edit(Guid id, Competition competition)
         {
             if (id != competition.CompetitionID)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+
                 try
                 {
-                    _context.Update(competition);
+                    var competition2 = await _context.Competition.SingleOrDefaultAsync(m => m.CompetitionID == id);
+                    competition2.Name = competition.Name;
+                    competition2.SportType = competition.SportType;
+                    _context.Update(competition2);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -229,8 +231,6 @@ namespace ARSN.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(competition);
         }
 
         // GET: Competitions/Delete/5

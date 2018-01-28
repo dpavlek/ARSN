@@ -22,18 +22,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="SportType" class="control-label"></label>
-                <input asp-for="SportType" class="form-control" readonly />
+                <input asp-for="SportType" class="form-control" readonly/>
                 <span asp-validation-for="SportType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CompetitionBegin" class="control-label"></label>
-                <input asp-for="CompetitionBegin" class="form-control" />
-                <span asp-validation-for="CompetitionBegin" class="text-danger"></span>
+                <input asp-for="CompetitionBegin" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <label asp-for="CompetitionEnd" class="control-label"></label>
-                <input asp-for="CompetitionEnd" class="form-control" />
-                <span asp-validation-for="CompetitionEnd" class="text-danger"></span>
+                <input asp-for="CompetitionEnd" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Spremi" class="btn btn-default" />
