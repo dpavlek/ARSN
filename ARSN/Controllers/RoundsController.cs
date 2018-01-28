@@ -71,6 +71,7 @@ namespace ARSN.Controllers
                                  .Where(d=>d.Competition.CompetitionID==CompetID)
                                  .ToListAsync();
                                 ModelState.AddModelError("Error", "Pobjednik natjecanja je: " + ListOfWinners.ToArray().GetValue(0).ToString());
+                                PopulateGraph(CompetID);
                                 return View(LastCollection);
                             }
                             string[] lines = ListOfWinners.ToArray();
@@ -126,8 +127,6 @@ namespace ARSN.Controllers
                             competition.RoundCollection.Add(NextRound);
                             foreach(var round in competition.RoundCollection)
                             _context.Competition.Update(competition);
-                            PopulateGraph(id);
-
                             await _context.SaveChangesAsync();
                         }
                     }

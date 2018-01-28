@@ -60,7 +60,11 @@
                     }
                 </td>
                 <td>
-                    <a asp-controller="Rounds" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
+                    @if (User.Identity.IsAuthenticated)
+    {
+                <a asp-controller="Rounds" asp-route-id="@item.RoundID">Generiraj novo kolo</a>
+
+}
                 </td>
             </tr>
         }
@@ -84,10 +88,8 @@
         var result = text.slice(1, -1);
         result = result.replace(/\\"/g, '');
         var array = result.split(",");
-        console.log(array);
         for (i = 0; i < array.length; i += 2) {
             var tempArray = [array[i], array[i + 1]];
-            console.log(tempArray);
             data.addRows([tempArray]);
         }
 
